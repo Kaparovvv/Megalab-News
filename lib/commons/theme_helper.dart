@@ -9,7 +9,8 @@ class ThemeHelper {
   static Color color2D4EC2 = const Color(0xff2D4EC2);
   static Color color858080 = const Color(0xff858080);
   static Color colorA01313 = const Color(0xffA01313);
+  static Color colorFBF9FB = const Color(0xffFBF9FB);
+  static Color color151515 = const Color(0xff151515);
   static Color blueAccent = Colors.blueAccent;
   static Color red = Colors.red;
-  static Color white50 = const Color.fromRGBO(255, 255, 255, 0.5);
 }

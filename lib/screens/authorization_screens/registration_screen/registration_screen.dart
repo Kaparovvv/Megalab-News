@@ -7,8 +7,8 @@ import 'package:megalab_news_app/commons/theme_helper.dart';
 import 'package:megalab_news_app/global_widgets/custom_button_widget.dart';
 import 'package:megalab_news_app/global_widgets/custom_textfield_widget.dart';
 import 'package:megalab_news_app/router/app_router.gr.dart';
-import 'package:megalab_news_app/screens/authorization_screens/auth_screen/auth_screen.dart';
 import 'package:megalab_news_app/screens/authorization_screens/local_widgets/password_textfield_widget.dart';
+import 'package:megalab_news_app/global_widgets/custom_textbutton_widget.dart';
 
 class RegistrationScreen extends StatelessWidget {
   const RegistrationScreen({super.key});
@@ -75,16 +75,14 @@ class RegistrationScreen extends StatelessWidget {
                         style: TextStyleHelper.f12w400
                             .copyWith(color: ThemeHelper.color5A5A5A),
                       ),
-                      TextButton(
-                        child: Text(
-                          'Войти',
-                          style: TextStyleHelper.f12w400.copyWith(
-                            color: ThemeHelper.color2D4EC2,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
+                      CustomTextButtonWidget(
                         onPressed: () => context.router.push(
                           const AuthScreenRoute(),
+                        ),
+                        text: 'Войти',
+                        textStyle: TextStyleHelper.f12w400.copyWith(
+                          color: ThemeHelper.color2D4EC2,
+                          decoration: TextDecoration.underline,
                         ),
                       ),
                     ],
