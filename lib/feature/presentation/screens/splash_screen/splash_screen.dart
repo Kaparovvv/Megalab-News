@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:megalab_news_app/commons/images_helper.dart';
 import 'package:megalab_news_app/router/app_router.gr.dart';
-import 'package:megalab_news_app/screens/authorization_screens/registration_screen/registration_screen.dart';
+import 'package:megalab_news_app/feature/presentation/screens/authorization_screens/registration_screen/registration_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

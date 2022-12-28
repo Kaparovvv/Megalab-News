@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:megalab_news_app/commons/icon_helper.dart';
 import 'package:megalab_news_app/commons/textStyle_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
-import 'package:megalab_news_app/global_widgets/custom_button_widget.dart';
-import 'package:megalab_news_app/global_widgets/custom_iconbutton_widget.dart';
+import 'package:megalab_news_app/feature/presentation/global_widgets/custom_button_widget.dart';
+import 'package:megalab_news_app/feature/presentation/global_widgets/custom_iconbutton_widget.dart';
 
 class FilteringDialogWidget extends StatefulWidget {
   const FilteringDialogWidget({super.key});

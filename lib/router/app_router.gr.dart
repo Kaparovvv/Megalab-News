@@ -14,10 +14,11 @@
 import 'package:auto_route/auto_route.dart' as _i4;
 import 'package:flutter/material.dart' as _i5;
 
-import '../screens/authorization_screens/auth_screen/auth_screen.dart' as _i3;
-import '../screens/authorization_screens/registration_screen/registration_screen.dart'
+import '../feature/presentation/screens/authorization_screens/auth_screen/auth_screen.dart'
+    as _i3;
+import '../feature/presentation/screens/authorization_screens/registration_screen/registration_screen.dart'
     as _i2;
-import '../screens/news_screen/news_screen.dart' as _i1;
+import '../feature/presentation/screens/news_screen/news_screen.dart' as _i1;
 
 class AppRouter extends _i4.RootStackRouter {
   AppRouter([_i5.GlobalKey<_i5.NavigatorState>? navigatorKey])

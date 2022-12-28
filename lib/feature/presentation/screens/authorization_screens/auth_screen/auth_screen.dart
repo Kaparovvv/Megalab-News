@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:megalab_news_app/commons/images_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
-import 'package:megalab_news_app/global_widgets/custom_button_widget.dart';
-import 'package:megalab_news_app/global_widgets/custom_textfield_widget.dart';
-import 'package:megalab_news_app/screens/authorization_screens/local_widgets/password_textfield_widget.dart';
+import 'package:megalab_news_app/feature/presentation/global_widgets/custom_button_widget.dart';
+import 'package:megalab_news_app/feature/presentation/global_widgets/custom_textfield_widget.dart';
+import 'package:megalab_news_app/feature/presentation/screens/authorization_screens/local_widgets/password_textfield_widget.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});

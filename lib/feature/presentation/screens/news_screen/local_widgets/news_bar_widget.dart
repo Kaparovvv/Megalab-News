@@ -4,7 +4,7 @@ import 'package:megalab_news_app/commons/icon_helper.dart';
 import 'package:megalab_news_app/commons/images_helper.dart';
 import 'package:megalab_news_app/commons/textStyle_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
-import 'package:megalab_news_app/global_widgets/custom_iconbutton_widget.dart';
+import 'package:megalab_news_app/feature/presentation/global_widgets/custom_iconbutton_widget.dart';
 
 class NewsBarWidget extends StatelessWidget {
   const NewsBarWidget({

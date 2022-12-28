@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:megalab_news_app/commons/icon_helper.dart';
 import 'package:megalab_news_app/commons/textStyle_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
-import 'package:megalab_news_app/global_widgets/cached_network_image_widget.dart';
-import 'package:megalab_news_app/global_widgets/custom_iconbutton_widget.dart';
-import 'package:megalab_news_app/global_widgets/custom_textbutton_widget.dart';
-import 'package:megalab_news_app/screens/news_screen/local_widgets/show_dialog_box_widget.dart';
+import 'package:megalab_news_app/feature/presentation/global_widgets/cached_network_image_widget.dart';
+import 'package:megalab_news_app/feature/presentation/global_widgets/custom_iconbutton_widget.dart';
+import 'package:megalab_news_app/feature/presentation/global_widgets/custom_textbutton_widget.dart';
+import 'package:megalab_news_app/feature/presentation/screens/news_screen/local_widgets/show_dialog_box_widget.dart';
 
 class NewsPublicationWidget extends StatelessWidget {
   const NewsPublicationWidget({

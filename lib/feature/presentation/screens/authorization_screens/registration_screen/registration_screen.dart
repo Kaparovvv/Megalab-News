@@ -4,11 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:megalab_news_app/commons/images_helper.dart';
 import 'package:megalab_news_app/commons/textStyle_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
-import 'package:megalab_news_app/global_widgets/custom_button_widget.dart';
-import 'package:megalab_news_app/global_widgets/custom_textfield_widget.dart';
+import 'package:megalab_news_app/feature/presentation/global_widgets/custom_button_widget.dart';
+import 'package:megalab_news_app/feature/presentation/global_widgets/custom_textfield_widget.dart';
 import 'package:megalab_news_app/router/app_router.gr.dart';
-import 'package:megalab_news_app/screens/authorization_screens/local_widgets/password_textfield_widget.dart';
-import 'package:megalab_news_app/global_widgets/custom_textbutton_widget.dart';
+import 'package:megalab_news_app/feature/presentation/screens/authorization_screens/local_widgets/password_textfield_widget.dart';
+import 'package:megalab_news_app/feature/presentation/global_widgets/custom_textbutton_widget.dart';
 
 class RegistrationScreen extends StatelessWidget {
   const RegistrationScreen({super.key});
