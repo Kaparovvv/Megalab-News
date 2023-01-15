@@ -15,6 +15,12 @@ class TextStyleHelper {
     fontWeight: FontWeight.w400,
   );
 
+  static TextStyle f30w500 = TextStyle(
+    fontSize: 30.sp,
+    color: ThemeHelper.black,
+    fontWeight: FontWeight.w500,
+  );
+
   static TextStyle f13w500 = TextStyle(
     fontSize: 13.sp,
     fontWeight: FontWeight.w500,
@@ -43,9 +49,21 @@ class TextStyleHelper {
     fontWeight: FontWeight.w500,
   );
 
+  static TextStyle f14w400 = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w400,
+    color: ThemeHelper.black,
+  );
+
   static TextStyle f16w500 = TextStyle(
     fontSize: 16.sp,
     fontWeight: FontWeight.w500,
     color: ThemeHelper.black,
+  );
+
+  static TextStyle colorTransparent = TextStyle(
+    fontSize: 42.sp,
+    fontWeight: FontWeight.w500,
+    color: Colors.transparent,
   );
 }
