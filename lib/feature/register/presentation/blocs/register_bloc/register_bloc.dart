@@ -11,7 +11,7 @@ const CACHED_FAILURE_MESSAGE = 'Cache Failure';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final RegisterUser registerUser;
-  RegisterBloc(this.registerUser) : super(RegisterInitial()) {
+  RegisterBloc({required this.registerUser}) : super(RegisterInitial()) {
     on<UserRegisterEvent>((event, emit) async {
       emit(LoadingRegisterState());
 
