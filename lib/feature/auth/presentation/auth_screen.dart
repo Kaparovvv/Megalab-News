@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:megalab_news_app/commons/images_helper.dart';
@@ -16,8 +17,8 @@ class AuthScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Icon(
+          onPressed: () => context.router.navigateBack(),
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: ThemeHelper.color7E5BC2,
           ),
@@ -36,8 +37,8 @@ class AuthScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 24.h),
                 TextFieldWithTextWidget(
-                  width: 231,
-                  height: 39,
+                  width: 231.w,
+                  height: 39.h,
                   controller: TextEditingController(),
                   title: 'Никнейм',
                 ),
