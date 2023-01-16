@@ -5,7 +5,6 @@ import 'package:megalab_news_app/commons/theme_helper.dart';
 import 'package:megalab_news_app/core/router/app_router.gr.dart';
 import 'package:megalab_news_app/feature/register/domain/usecases/register_user.dart';
 import 'package:megalab_news_app/feature/register/presentation/blocs/register_bloc/register_bloc.dart';
-import 'package:megalab_news_app/locator_sevice/locator_service.dart';
 import 'package:megalab_news_app/main.dart';
 
 class MyApp extends StatelessWidget {
