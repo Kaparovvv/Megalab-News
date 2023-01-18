@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
 import 'package:megalab_news_app/core/router/app_router.gr.dart';
+import 'package:megalab_news_app/feature/auth/domain/usecases/auth_user.dart';
+import 'package:megalab_news_app/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:megalab_news_app/feature/register/domain/usecases/register_user.dart';
 import 'package:megalab_news_app/feature/register/presentation/blocs/register_bloc/register_bloc.dart';
-import 'package:megalab_news_app/locator_sevice/locator_service.dart';
+import 'package:megalab_news_app/utils/dependencies_injection.dart';
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
@@ -15,8 +16,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // double width = MediaQuery.of(context).size.width;
-    // double height = MediaQuery.of(context).size.height;
     return ScreenUtilInit(
       designSize: const Size(360, 812),
       builder: (context, child) => MultiBlocProvider(
@@ -25,7 +24,12 @@ class MyApp extends StatelessWidget {
             create: (_) => RegisterBloc(
               registerUser: getIt.get<RegisterUser>(),
             ),
-          )
+          ),
+          BlocProvider(
+            create: (_) => AuthBloc(
+              authUser: getIt.get<AuthUser>(),
+            ),
+          ),
         ],
         child: MaterialApp.router(
           routeInformationParser: _appRouter.defaultRouteParser(),
