@@ -10,11 +10,9 @@ import 'package:megalab_news_app/core/global_widgets/custom_button_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/loading_indicator_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/textfield_with_text_widget.dart';
 import 'package:megalab_news_app/core/router/app_router.gr.dart';
-import 'package:megalab_news_app/feature/register/domain/usecases/register_user.dart';
 import 'package:megalab_news_app/feature/register/presentation/blocs/register_bloc/register_bloc.dart';
 import 'package:megalab_news_app/feature/register/presentation/local_widgets/password_textfield_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_textbutton_widget.dart';
-import 'package:megalab_news_app/locator_sevice/locator_service.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});

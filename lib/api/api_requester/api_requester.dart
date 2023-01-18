@@ -1,21 +1,27 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:megalab_news_app/api/error/catch_exception.dart';
+import 'package:megalab_news_app/utils/dependencies_injection.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiRequester {
   static const String url = 'https://megalab.pythonanywhere.com/';
+  static const CACHER_USER_TOKEN = 'CACHER_USER_TOKEN';
 
-  Future<Dio> initDio() async {
-    // String token = await tokenBox.get("token", defaultValue: '');
-    // String token = '';
-    // log('Token_apiRequester === $token');
+  Future<Dio> initDio({bool? isToken}) async {
+    log('User Token =========== ${getIt.get<SharedPreferences>().getString(CACHER_USER_TOKEN)}');
     return Dio(
       BaseOptions(
         baseUrl: url,
         responseType: ResponseType.json,
         receiveTimeout: 30000,
-        headers: {
-          "Authorization": 'Token 8ef696edf0104d6d9a15104afc9d89a600515f31'
-        },
+        headers: isToken ?? false
+            ? {
+                "Authorization":
+                    'Token ${getIt.get<SharedPreferences>().getString(CACHER_USER_TOKEN)}'
+              }
+            : null,
         connectTimeout: 30000,
       ),
     );
@@ -23,9 +29,10 @@ class ApiRequester {
 
   Future<Response> toGet(
     String url, {
+    bool? isToken,
     Map<String, dynamic>? queryParam,
   }) async {
-    Dio dio = await initDio();
+    Dio dio = await initDio(isToken: isToken);
     try {
       return dio.get(url, queryParameters: queryParam);
     } catch (e) {
@@ -35,10 +42,11 @@ class ApiRequester {
 
   Future<Response> toPost(
     String url, {
+    bool? isToken,
     Map<String, dynamic>? param,
     required Map<String, dynamic> body,
   }) async {
-    Dio dio = await initDio();
+    Dio dio = await initDio(isToken: isToken);
     try {
       return dio.post(url, queryParameters: param, data: body);
     } catch (e) {
@@ -46,9 +54,13 @@ class ApiRequester {
     }
   }
 
-  Future<Response> toPatch(String url,
-      {Map<String, dynamic>? param, required Map<String, dynamic> body}) async {
-    Dio dio = await initDio();
+  Future<Response> toPatch(
+    String url, {
+    bool? isToken,
+    Map<String, dynamic>? param,
+    required Map<String, dynamic> body,
+  }) async {
+    Dio dio = await initDio(isToken: isToken);
     try {
       return dio.patch(url, queryParameters: param, data: body);
     } catch (e) {
@@ -56,8 +68,11 @@ class ApiRequester {
     }
   }
 
-  Future<Response> toDelete(String url) async {
-    Dio dio = await initDio();
+  Future<Response> toDelete(
+    String url, {
+    bool? isToken,
+  }) async {
+    Dio dio = await initDio(isToken: isToken);
     try {
       return dio.delete(url);
     } catch (e) {

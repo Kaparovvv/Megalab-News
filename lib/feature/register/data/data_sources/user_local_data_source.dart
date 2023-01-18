@@ -23,19 +23,6 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
     } else {
       throw CacheException();
     }
-    // final userDataModel = UserDataModel(
-    //   id: userDataBox.get('id'),
-    //   name: userDataBox.get('name'),
-    //   lastName: userDataBox.get('lastName'),
-    //   nickname: userDataBox.get('nickName'),
-    // );
-
-    // if (userDataBox.isNotEmpty) {
-    //   print('Get UserData from Cache: ${userDataBox.length}');
-    //   return Future.value(userDataModel);
-    // } else {
-    //   throw CacheException();
-    // }
   }
 
   @override
@@ -46,36 +33,5 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
         userDataModel.toJson(),
       ),
     );
-    // final String id = userDataModel.id.toString();
-    // final String name = userDataModel.name;
-    // final String lastName = userDataModel.lastName;
-    // final String nickName = userDataModel.nickname;
-
-    // sharedPreferences.setString('id', id);
-    // sharedPreferences.setString('name', name);
-    // sharedPreferences.setString('lastName', lastName);
-    // sharedPreferences.setString('nickname', nickName);
-
-    // return Future.value();
-
-    // await userDataBox.put('id', userDataModel.id);
-    // await userDataBox.put('nickName', userDataModel.nickname);
-    // await userDataBox.put('name', userDataModel.name);
-    // await userDataBox.put('lastName', userDataModel.lastName);
-    // return Future.value(userDataBox);
-    // print(
-    //     '${userData.id},\n${userData.nickname},\n${userData.name},\n${userData.lastName},\n');
-    // await userData.delete();
-    // print(
-    //     '${userData.id},\n${userData.nickname},\n${userData.name},\n${userData.lastName},\n');
-
-    // if (userDataBox.isEmpty) {
-    //   userData.id = userDataModel.id;
-    //   userData.nickname = userDataModel.nickname;
-    //   userData.name = userDataModel.name;
-    //   userData.lastName = userDataModel.lastName;
-
-    //   userDataBox.add(userData);
-    // }
   }
 }
