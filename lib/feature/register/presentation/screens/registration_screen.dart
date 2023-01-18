@@ -12,6 +12,7 @@ import 'package:megalab_news_app/core/router/app_router.gr.dart';
 import 'package:megalab_news_app/feature/register/presentation/blocs/register_bloc/register_bloc.dart';
 import 'package:megalab_news_app/feature/register/presentation/local_widgets/password_textfield_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_textbutton_widget.dart';
+import 'package:megalab_news_app/locator_sevice/locator_service.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -24,7 +25,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController nicknameController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
-  TextEditingController profileImageController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController password2Controller = TextEditingController();
 
@@ -32,7 +32,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   void initState() {
-    _registerBloc = RegisterBloc();
+    _registerBloc = BlocProvider.of(context, listen: false);
     super.initState();
   }
 
@@ -93,7 +93,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     },
                     builder: (context, state) {
                       if (state is LoadingRegisterState) {
-                        return const LoadingIndicatorWidget(size: 100);
+                        return const LoadingIndicatorWidget(size: 30);
                       }
                       return CustomButtonWidget(
                         width: 191.w,
@@ -103,7 +103,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             nickname: nicknameController.text,
                             name: nameController.text,
                             lastName: lastNameController.text,
-                            profileImage: profileImageController.text,
                             password: passwordController.text,
                             password2: password2Controller.text,
                           ),

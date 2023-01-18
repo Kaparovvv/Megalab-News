@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:megalab_news_app/core/error/exception.dart';
 import 'package:megalab_news_app/core/platform/network_info.dart';
 import 'package:megalab_news_app/feature/register/data/data_sources/user_local_data_source.dart';
@@ -24,7 +25,7 @@ class RegisterRepositoryImpl implements RegisterRepository {
     String nickname,
     String name,
     String lastName,
-    String profileImage,
+    // String profileImage,
     String password,
     String password2,
   ) async {
@@ -33,7 +34,7 @@ class RegisterRepositoryImpl implements RegisterRepository {
         nickname,
         name,
         lastName,
-        profileImage,
+        // profileImage,
         password,
         password2,
       ),
@@ -42,7 +43,8 @@ class RegisterRepositoryImpl implements RegisterRepository {
 
   Future<Either<Failure, UserEntity>> _registerUser(
       Future<UserDataModel> Function() register) async {
-    if (await networkInfo.isConnected) {
+    if (await networkInfo.isConnected == ConnectivityResult.mobile ||
+        await networkInfo.isConnected == ConnectivityResult.wifi) {
       try {
         final remoteUser = await register();
         localDataSource.userDataToCache(remoteUser);

@@ -6,13 +6,13 @@ class UserDataModel extends UserEntity {
     required name,
     required lastName,
     required nickname,
-    required profileImage,
+    // required profileImage,
   }) : super(
           id: id,
           name: name,
           lastName: lastName,
           nickname: nickname,
-          profileImage: profileImage,
+          // profileImage: profileImage,
         );
 
   factory UserDataModel.fromJson(Map<String, dynamic> json) => UserDataModel(
@@ -20,7 +20,7 @@ class UserDataModel extends UserEntity {
         name: json["name"],
         lastName: json["last_name"],
         nickname: json["nickname"],
-        profileImage: json["profile_image"],
+        // profileImage: json["profile_image"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -28,6 +28,6 @@ class UserDataModel extends UserEntity {
         "name": name,
         "last_name": lastName,
         "nickname": nickname,
-        "profile_image": profileImage,
+        // "profile_image": profileImage,
       };
 }

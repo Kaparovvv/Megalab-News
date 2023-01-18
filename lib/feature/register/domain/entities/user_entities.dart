@@ -5,14 +5,14 @@ class UserEntity extends Equatable {
   final String name;
   final String lastName;
   final String nickname;
-  final String profileImage;
+  // final String? profileImage;
 
   const UserEntity({
     required this.id,
     required this.name,
     required this.lastName,
     required this.nickname,
-    required this.profileImage,
+    // this.profileImage,
   });
 
   @override
@@ -21,6 +21,6 @@ class UserEntity extends Equatable {
         name,
         lastName,
         nickname,
-        profileImage,
+        // profileImage,
       ];
 }
