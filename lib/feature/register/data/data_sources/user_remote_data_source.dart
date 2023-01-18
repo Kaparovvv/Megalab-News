@@ -4,14 +4,14 @@ import 'package:dio/dio.dart';
 import 'package:megalab_news_app/core/error/exception.dart';
 import 'package:megalab_news_app/core/urls/urls.dart';
 import 'package:megalab_news_app/feature/register/data/models/user_data_model.dart';
-import 'package:megalab_news_app/services/api_requester/api_requester.dart';
+import 'package:megalab_news_app/api/api_requester/api_requester.dart';
 
 abstract class UserRemoteDataSource {
   Future<UserDataModel> registerUser(
     String nickname,
     String name,
     String lastName,
-    String profileImage,
+    // String profileImage,
     String password,
     String password2,
   );
@@ -23,7 +23,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     String nickname,
     String name,
     String lastName,
-    String profileImage,
+    // String profileImage,
     String password,
     String password2,
   ) async {
@@ -32,7 +32,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       'nickname': nickname,
       'name': name,
       'last_name': lastName,
-      'profile_image': profileImage,
+      'profile_image': null,
       'password': password,
       'password2': password2,
     });

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:megalab_news_app/services/error/catch_exception.dart';
+import 'package:megalab_news_app/api/error/catch_exception.dart';
 
 class ApiRequester {
   static const String url = 'https://megalab.pythonanywhere.com/';

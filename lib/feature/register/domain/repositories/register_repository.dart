@@ -7,7 +7,7 @@ abstract class RegisterRepository {
     String nickname,
     String name,
     String lastName,
-    String profileImage,
+    // String profileImage,
     String password,
     String password2,
   );

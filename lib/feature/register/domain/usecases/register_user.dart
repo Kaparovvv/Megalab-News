@@ -16,7 +16,7 @@ class RegisterUser extends UseCase<UserEntity, UserDataParams> {
       params.nickname,
       params.name,
       params.lastName,
-      params.profileImage,
+      // params.profileImage ?? '',
       params.password,
       params.password2,
     );
@@ -27,7 +27,7 @@ class UserDataParams extends Equatable {
   final String nickname;
   final String name;
   final String lastName;
-  final String profileImage;
+  // final String? profileImage;
   final String password;
   final String password2;
 
@@ -35,7 +35,7 @@ class UserDataParams extends Equatable {
     required this.nickname,
     required this.name,
     required this.lastName,
-    required this.profileImage,
+    // this.profileImage,
     required this.password,
     required this.password2,
   });
@@ -44,7 +44,7 @@ class UserDataParams extends Equatable {
         nickname,
         name,
         lastName,
-        profileImage,
+        // profileImage,
         password,
         password2,
         nickname,

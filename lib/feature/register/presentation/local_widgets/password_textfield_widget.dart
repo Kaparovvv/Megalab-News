@@ -35,8 +35,8 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
         ),
         SizedBox(height: 8.h),
         SizedBox(
-          width: 271.r,
-          height: 39.r,
+          width: 271.w,
+          height: 39.h,
           child: TextFormField(
             controller: widget.controller,
             textInputAction: TextInputAction.next,
