@@ -42,7 +42,8 @@ class RegisterRepositoryImpl implements RegisterRepository {
   }
 
   Future<Either<Failure, UserEntity>> _registerUser(
-      Future<UserDataModel> Function() register) async {
+    Future<UserDataModel> Function() register,
+  ) async {
     if (await networkInfo.isConnected == ConnectivityResult.mobile ||
         await networkInfo.isConnected == ConnectivityResult.wifi) {
       try {

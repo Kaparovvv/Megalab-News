@@ -21,7 +21,7 @@ class ApiRequester {
                 "Authorization":
                     'Token ${getIt.get<SharedPreferences>().getString(CACHER_USER_TOKEN)}'
               }
-            : null,
+            : {},
         connectTimeout: 30000,
       ),
     );

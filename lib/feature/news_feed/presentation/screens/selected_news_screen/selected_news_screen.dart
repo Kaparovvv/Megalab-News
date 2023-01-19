@@ -8,7 +8,7 @@ import 'package:megalab_news_app/core/global_widgets/bottom_panel_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_divider_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/news_sliver_appbar_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/uppercontrolpanel_widget.dart';
-import 'package:megalab_news_app/feature/news_feed/presentation/screens/news_list_screen/local_widgets/news_publication_widget.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/local_widgets/news_publication_widget.dart';
 import 'package:megalab_news_app/feature/profile/presentation/screens/news_publication_screen/news_publication_screen.dart';
 
 class SelectedNewsScreen extends StatefulWidget {
@@ -61,12 +61,13 @@ class _SelectedNewsScreenState extends State<SelectedNewsScreen> {
                         EdgeInsets.only(top: 21.h, left: 20.w, right: 20.w),
                     child: Column(
                       children: [
-                        NewsPublicationWidget(
-                          onPressed: () => context.router.push(
-                            const NewsScreenRoute(),
-                          ),
-                          isExtended: false,
-                        ),
+                        // NewsPublicationWidget(
+                        //   image: '',
+                        //   onPressed: () => context.router.push(
+                        //     const NewsScreenRoute(),
+                        //   ),
+                        //   isExtended: false,
+                        // ),
                         SizedBox(height: 24.h),
                         if (index != (count - 1)) const CustomDividerWidget(),
                       ],

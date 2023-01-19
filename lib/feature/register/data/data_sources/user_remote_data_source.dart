@@ -36,9 +36,9 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       'password': password,
       'password2': password2,
     });
-    log('Register response ======= ${response.statusMessage}');
 
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
+      log('Register statusMessage ======= ${response.statusMessage}');
       UserDataModel userDataModel = UserDataModel.fromJson(response.data);
       log('Register response ======= ${response.data}');
 

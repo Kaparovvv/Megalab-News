@@ -15,8 +15,9 @@ import 'package:auto_route/auto_route.dart' as _i10;
 import 'package:flutter/material.dart' as _i11;
 
 import '../../feature/auth/presentation/auth_screen.dart' as _i8;
+import '../../feature/news_feed/domain/entities/post_list_entity.dart' as _i13;
 import '../../feature/news_feed/presentation/screens/news_list_screen/news_list_screen.dart'
-    as _i3;
+    as _i2;
 import '../../feature/news_feed/presentation/screens/news_screen/news_screen.dart'
     as _i4;
 import '../../feature/news_feed/presentation/screens/selected_news_screen/selected_news_screen.dart'
@@ -26,7 +27,7 @@ import '../../feature/profile/presentation/screens/news_publication_screen/news_
 import '../../feature/profile/presentation/screens/profile_screen/profile_screen.dart'
     as _i6;
 import '../../feature/register/domain/entities/user_entities.dart' as _i12;
-import '../../feature/register/presentation/screens/example_screen.dart' as _i2;
+import '../../feature/register/presentation/screens/example_screen.dart' as _i3;
 import '../../feature/register/presentation/screens/registration_screen.dart'
     as _i7;
 import '../../feature/splash/splash_screen/splash_screen.dart' as _i1;
@@ -43,26 +44,30 @@ class AppRouter extends _i10.RootStackRouter {
         child: const _i1.SplashScreen(),
       );
     },
+    NewsListScreenRoute.name: (routeData) {
+      return _i10.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i2.NewsListScreen(),
+      );
+    },
     ExampleScreenRoute.name: (routeData) {
       final args = routeData.argsAs<ExampleScreenRouteArgs>();
       return _i10.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i2.ExampleScreen(
+        child: _i3.ExampleScreen(
           key: args.key,
           userEntity: args.userEntity,
         ),
       );
     },
-    NewsListScreenRoute.name: (routeData) {
-      return _i10.MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: const _i3.NewsListScreen(),
-      );
-    },
     NewsScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<NewsScreenRouteArgs>();
       return _i10.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i4.NewsScreen(),
+        child: _i4.NewsScreen(
+          key: args.key,
+          postData: args.postData,
+        ),
       );
     },
     NewsPublicationScreenRoute.name: (routeData) {
@@ -110,12 +115,12 @@ class AppRouter extends _i10.RootStackRouter {
           path: 'splashScreen',
         ),
         _i10.RouteConfig(
-          ExampleScreenRoute.name,
-          path: 'example',
-        ),
-        _i10.RouteConfig(
           NewsListScreenRoute.name,
           path: 'newsList',
+        ),
+        _i10.RouteConfig(
+          ExampleScreenRoute.name,
+          path: 'example',
         ),
         _i10.RouteConfig(
           NewsScreenRoute.name,
@@ -157,7 +162,19 @@ class SplashScreenRoute extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i2.ExampleScreen]
+/// [_i2.NewsListScreen]
+class NewsListScreenRoute extends _i10.PageRouteInfo<void> {
+  const NewsListScreenRoute()
+      : super(
+          NewsListScreenRoute.name,
+          path: 'newsList',
+        );
+
+  static const String name = 'NewsListScreenRoute';
+}
+
+/// generated route for
+/// [_i3.ExampleScreen]
 class ExampleScreenRoute extends _i10.PageRouteInfo<ExampleScreenRouteArgs> {
   ExampleScreenRoute({
     _i11.Key? key,
@@ -191,27 +208,37 @@ class ExampleScreenRouteArgs {
 }
 
 /// generated route for
-/// [_i3.NewsListScreen]
-class NewsListScreenRoute extends _i10.PageRouteInfo<void> {
-  const NewsListScreenRoute()
-      : super(
-          NewsListScreenRoute.name,
-          path: 'newsList',
-        );
-
-  static const String name = 'NewsListScreenRoute';
-}
-
-/// generated route for
 /// [_i4.NewsScreen]
-class NewsScreenRoute extends _i10.PageRouteInfo<void> {
-  const NewsScreenRoute()
-      : super(
+class NewsScreenRoute extends _i10.PageRouteInfo<NewsScreenRouteArgs> {
+  NewsScreenRoute({
+    _i11.Key? key,
+    required _i13.PostListEntity postData,
+  }) : super(
           NewsScreenRoute.name,
           path: 'news',
+          args: NewsScreenRouteArgs(
+            key: key,
+            postData: postData,
+          ),
         );
 
   static const String name = 'NewsScreenRoute';
+}
+
+class NewsScreenRouteArgs {
+  const NewsScreenRouteArgs({
+    this.key,
+    required this.postData,
+  });
+
+  final _i11.Key? key;
+
+  final _i13.PostListEntity postData;
+
+  @override
+  String toString() {
+    return 'NewsScreenRouteArgs{key: $key, postData: $postData}';
+  }
 }
 
 /// generated route for

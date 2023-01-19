@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:megalab_news_app/commons/images_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
 
 class CachedNetworkImageWidget extends StatelessWidget {
@@ -11,23 +11,26 @@ class CachedNetworkImageWidget extends StatelessWidget {
     required this.width,
     required this.height,
     this.radius,
+    this.shape,
   }) : super(key: key);
   final bool isRadius;
   final String? imageUrl;
-  final double? width;
-  final double? height;
+  final double width;
+  final double height;
   final BorderRadius? radius;
+  final BoxShape? shape;
 
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl: imageUrl ??
-          'https://pbs.twimg.com/profile_images/932599989964099584/GKV4NGiU_400x400.jpg',
+      imageUrl:
+          'https://megalab.pythonanywhere.com${imageUrl ?? '/media/post_image/image.png'}',
       imageBuilder: (context, imageProvider) => Container(
-        width: width!,
-        height: height!,
+        width: width,
+        height: height,
         decoration: BoxDecoration(
           borderRadius: isRadius ? radius : null,
+          shape: shape ?? BoxShape.rectangle,
           image: DecorationImage(
             image: imageProvider,
             fit: BoxFit.fill,
@@ -35,16 +38,19 @@ class CachedNetworkImageWidget extends StatelessWidget {
         ),
       ),
       placeholder: (context, url) => Center(
-        child: SizedBox(
-          width: 30.w,
-          height: 30.h,
-          child: CircularProgressIndicator(
-            strokeWidth: 3.w,
-            color: ThemeHelper.color7E5BC2,
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            color: ThemeHelper.blueGrey,
+            shape: shape ?? BoxShape.rectangle,
           ),
         ),
       ),
-      errorWidget: (context, url, error) => const Icon(Icons.error),
+      errorWidget: (context, url, error) => Image.asset(
+        ImagesHelper.imageNotFound,
+        fit: BoxFit.cover,
+      ),
     );
   }
 }

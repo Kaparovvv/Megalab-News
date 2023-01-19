@@ -15,6 +15,7 @@ class ThemeHelper {
   static const Color colorE8E8E8 = Color(0xffE8E8E8);
   static const Color dividerColor = Color(0xffD9D9D9);
   static const Color blueAccent = Colors.blueAccent;
+  static Color blueGrey = Colors.blueGrey[200]!.withOpacity(0.2);
   static const Color red = Colors.red;
   static const Color white016 = Color.fromRGBO(0, 0, 0, 0.16);
 }

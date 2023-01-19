@@ -10,11 +10,8 @@ import 'package:megalab_news_app/core/global_widgets/custom_button_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/loading_indicator_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/textfield_with_text_widget.dart';
 import 'package:megalab_news_app/core/router/app_router.gr.dart';
-import 'package:megalab_news_app/feature/auth/data/data_sources/user_token_local_data_source.dart';
 import 'package:megalab_news_app/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:megalab_news_app/feature/register/presentation/local_widgets/password_textfield_widget.dart';
-import 'package:megalab_news_app/utils/dependencies_injection.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -95,11 +92,6 @@ class _AuthScreenState extends State<AuthScreen> {
                     );
                   },
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      log('User Token =========== ${getIt.get<SharedPreferences>().getString(CACHER_USER_TOKEN)}');
-                    },
-                    child: Text('k'))
               ],
             ),
           ),
