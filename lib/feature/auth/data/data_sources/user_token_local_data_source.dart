@@ -32,9 +32,6 @@ class UserTokenLocalDataSourceImpl implements UserTokenLocalDataSource {
 
   @override
   Future<void> userTokenToCache(UserTokenModel userTokenModel) {
-    return sharedPreferences.setString(
-      CACHER_USER_TOKEN,
-      json.encode(userTokenModel.toJson()),
-    );
+    return sharedPreferences.setString(CACHER_USER_TOKEN, userTokenModel.token);
   }
 }

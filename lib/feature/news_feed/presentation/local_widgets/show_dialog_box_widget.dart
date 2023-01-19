@@ -4,7 +4,7 @@ import 'package:megalab_news_app/commons/icon_helper.dart';
 import 'package:megalab_news_app/commons/textStyle_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_iconbutton_widget.dart';
-import 'package:megalab_news_app/feature/news_feed/presentation/screens/news_list_screen/local_widgets/icon_social_network_widget.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/local_widgets/icon_social_network_widget.dart';
 
 class ShowDialogBoxWidget extends StatelessWidget {
   const ShowDialogBoxWidget({super.key});

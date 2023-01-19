@@ -5,6 +5,7 @@ import 'package:megalab_news_app/commons/textStyle_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
 import 'package:megalab_news_app/core/global_widgets/uppercontrolpanel_widget.dart';
 
+// ignore: must_be_immutable
 class NewsSliverAppBarWidget extends StatefulWidget {
   ScrollController scrollController;
   NewsSliverAppBarWidget({Key? key, required this.scrollController})
@@ -32,16 +33,10 @@ class _NewsSliverAppBarWidgetState extends State<NewsSliverAppBarWidget> {
     widget.scrollController.addListener(() {
       _isAppBarExpanded
           ? isFlexibleSpace != false
-              ? setState(
-                  () {
-                    isFlexibleSpace = false;
-                  },
-                )
+              ? callingSetState(false)
               : {}
           : isFlexibleSpace != true
-              ? setState(() {
-                  isFlexibleSpace = true;
-                })
+              ? callingSetState(true)
               : {};
     });
   }
@@ -49,6 +44,14 @@ class _NewsSliverAppBarWidgetState extends State<NewsSliverAppBarWidget> {
   bool get _isAppBarExpanded {
     return widget.scrollController.hasClients &&
         widget.scrollController.offset > (100 - kToolbarHeight);
+  }
+
+  callingSetState(bool isBool) {
+    if (mounted) {
+      setState(() {
+        isFlexibleSpace = isBool;
+      });
+    }
   }
 
   @override
