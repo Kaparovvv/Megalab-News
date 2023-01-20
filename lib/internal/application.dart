@@ -5,8 +5,10 @@ import 'package:megalab_news_app/commons/theme_helper.dart';
 import 'package:megalab_news_app/core/router/app_router.gr.dart';
 import 'package:megalab_news_app/feature/auth/domain/usecases/auth_user.dart';
 import 'package:megalab_news_app/feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:megalab_news_app/feature/news_feed/domain/usecases/post_detail.dart';
 import 'package:megalab_news_app/feature/news_feed/domain/usecases/post_list.dart';
-import 'package:megalab_news_app/feature/news_feed/presentation/blocs/post_list_bloc/post_list_bloc.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/blocs/post_detail_bloc/post_detail_bloc.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/blocs/post_list_bloc/post_bloc.dart';
 import 'package:megalab_news_app/feature/register/domain/usecases/register_user.dart';
 import 'package:megalab_news_app/feature/register/presentation/blocs/register_bloc/register_bloc.dart';
 import 'package:megalab_news_app/utils/dependencies_injection.dart';
@@ -33,8 +35,14 @@ class MyApp extends StatelessWidget {
             ),
           ),
           BlocProvider(
-            create: (_) => PostListBloc(
+            create: (_) => PostBloc(
               postList: getIt.get<PostList>(),
+              postDetail: getIt.get<PostDetail>(),
+            ),
+          ),
+          BlocProvider(
+            create: (_) => PostDetailBloc(
+              postDetail: getIt.get<PostDetail>(),
             ),
           ),
         ],

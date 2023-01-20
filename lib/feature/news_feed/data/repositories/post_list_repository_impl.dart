@@ -1,10 +1,10 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:megalab_news_app/core/error/exception.dart';
 import 'package:megalab_news_app/core/platform/network_info.dart';
-import 'package:megalab_news_app/feature/news_feed/data/data_sources/post_list_local_data_source.dart';
-import 'package:megalab_news_app/feature/news_feed/data/data_sources/post_list_remote_data_source.dart';
-import 'package:megalab_news_app/feature/news_feed/data/models/post_list_model.dart';
-import 'package:megalab_news_app/feature/news_feed/domain/entities/post_list_entity.dart';
+import 'package:megalab_news_app/feature/news_feed/data/data_sources/post_list/post_list_local_data_source.dart';
+import 'package:megalab_news_app/feature/news_feed/data/data_sources/post_list/post_list_remote_data_source.dart';
+import 'package:megalab_news_app/feature/news_feed/data/models/post_model.dart';
+import 'package:megalab_news_app/feature/news_feed/domain/entities/post_entity.dart';
 import 'package:megalab_news_app/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:megalab_news_app/feature/news_feed/domain/repositories/post_list_repository.dart';
@@ -21,7 +21,7 @@ class PostListRepositoryImpl extends PostListRepository {
   });
 
   @override
-  Future<Either<Failure, List<PostListEntity>>> getPostList(
+  Future<Either<Failure, List<PostEntity>>> getPostList(
     String search,
     String tag,
     String author,
@@ -35,8 +35,8 @@ class PostListRepositoryImpl extends PostListRepository {
     );
   }
 
-  Future<Either<Failure, List<PostListEntity>>> _getPostList(
-    Future<List<PostListModel>> Function() getPostList,
+  Future<Either<Failure, List<PostEntity>>> _getPostList(
+    Future<List<PostModel>> Function() getPostList,
   ) async {
     if (await networkInfo.isConnected == ConnectivityResult.mobile ||
         await networkInfo.isConnected == ConnectivityResult.wifi) {

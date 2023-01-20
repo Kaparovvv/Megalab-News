@@ -8,12 +8,16 @@ import 'package:megalab_news_app/feature/auth/data/repositories/auth_repository.
 import 'package:megalab_news_app/feature/auth/domain/repositories/auth_repository.dart';
 import 'package:megalab_news_app/feature/auth/domain/usecases/auth_user.dart';
 import 'package:megalab_news_app/feature/auth/presentation/bloc/auth_bloc.dart';
-import 'package:megalab_news_app/feature/news_feed/data/data_sources/post_list_local_data_source.dart';
-import 'package:megalab_news_app/feature/news_feed/data/data_sources/post_list_remote_data_source.dart';
+import 'package:megalab_news_app/feature/news_feed/data/data_sources/post_list/post_list_local_data_source.dart';
+import 'package:megalab_news_app/feature/news_feed/data/data_sources/post_list/post_list_remote_data_source.dart';
+import 'package:megalab_news_app/feature/news_feed/data/repositories/post_detail_repository.dart';
 import 'package:megalab_news_app/feature/news_feed/data/repositories/post_list_repository_impl.dart';
+import 'package:megalab_news_app/feature/news_feed/domain/repositories/post_detail_repository.dart';
 import 'package:megalab_news_app/feature/news_feed/domain/repositories/post_list_repository.dart';
+import 'package:megalab_news_app/feature/news_feed/domain/usecases/post_detail.dart';
 import 'package:megalab_news_app/feature/news_feed/domain/usecases/post_list.dart';
-import 'package:megalab_news_app/feature/news_feed/presentation/blocs/post_list_bloc/post_list_bloc.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/blocs/post_detail_bloc/post_detail_bloc.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/blocs/post_list_bloc/post_bloc.dart';
 import 'package:megalab_news_app/feature/register/data/data_sources/user_local_data_source.dart';
 import 'package:megalab_news_app/feature/register/data/data_sources/user_remote_data_source.dart';
 import 'package:megalab_news_app/feature/register/data/repositories/register_repository_impl.dart';
@@ -21,6 +25,9 @@ import 'package:megalab_news_app/feature/register/domain/repositories/register_r
 import 'package:megalab_news_app/feature/register/domain/usecases/register_user.dart';
 import 'package:megalab_news_app/feature/register/presentation/blocs/register_bloc/register_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../feature/news_feed/data/data_sources/post_detail/post_detail_local_data_source.dart';
+import '../feature/news_feed/data/data_sources/post_detail/post_detail_remote_data_source.dart';
 
 final getIt = GetIt.instance;
 
@@ -39,7 +46,17 @@ Future<void> init() async {
 
   //PostsList
   getIt.registerFactory(
-    () => PostListBloc(postList: getIt.get<PostList>()),
+    () => PostBloc(
+      postList: getIt.get<PostList>(),
+      postDetail: getIt.get<PostDetail>(),
+    ),
+  );
+
+  //PostDetailBloc
+  getIt.registerFactory(
+    () => PostDetailBloc(
+      postDetail: getIt.get<PostDetail>(),
+    ),
   );
 
   ///UseCases
@@ -57,6 +74,11 @@ Future<void> init() async {
   //PostList
   getIt.registerFactory(
     () => PostList(getIt()),
+  );
+
+  //PostDetail
+  getIt.registerFactory(
+    () => PostDetail(getIt()),
   );
 
   ///Repository
@@ -82,6 +104,14 @@ Future<void> init() async {
         networkInfo: getIt(),
       ));
 
+  //PostDetail
+  getIt.registerLazySingleton<PostDetailRepository>(
+      () => PostDetailRepositoryImpl(
+            localDataSource: getIt(),
+            remoteDataSource: getIt(),
+            networkInfo: getIt(),
+          ));
+
   ///Data_Source
 
   //UserData
@@ -106,6 +136,14 @@ Future<void> init() async {
   );
   getIt.registerLazySingleton<PostListLocalDataSource>(
     () => PostListLocalDataSourceImpl(sharedPreferences: getIt()),
+  );
+
+  //PostDetail
+  getIt.registerLazySingleton<PostDetailRemoteDataSource>(
+    () => PostDetailRemoteDataSourceImpl(),
+  );
+  getIt.registerLazySingleton<PostDetailLocalDataSource>(
+    () => PostDetailLocalDataSourceImpl(sharedPreferences: getIt()),
   );
 
   ///Core

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-class PostListEntity extends Equatable {
-  PostListEntity({
+class PostEntity extends Equatable {
+  PostEntity({
     this.id,
     this.tag,
     this.title,

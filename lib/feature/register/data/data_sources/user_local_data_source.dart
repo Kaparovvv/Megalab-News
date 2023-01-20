@@ -19,7 +19,11 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   Future<UserDataModel> getUserDataFromCache() {
     final jsonUserData = sharedPreferences.getString(CACHED_USER_DATA);
     if (jsonUserData!.isNotEmpty) {
-      return Future.value(UserDataModel.fromJson(json.decode(jsonUserData)));
+      return Future.value(
+        UserDataModel.fromJson(
+          json.decode(jsonUserData),
+        ),
+      );
     } else {
       throw CacheException();
     }
