@@ -8,12 +8,12 @@ import 'package:megalab_news_app/core/global_widgets/cached_network_image_widget
 import 'package:megalab_news_app/core/global_widgets/custom_iconbutton_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_textbutton_widget.dart';
 import 'package:megalab_news_app/core/router/app_router.gr.dart';
-import 'package:megalab_news_app/feature/news_feed/domain/entities/post_list_entity.dart';
+import 'package:megalab_news_app/feature/news_feed/domain/entities/post_entity.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/local_widgets/show_dialog_box_widget.dart';
 
 class NewsPublicationWidget extends StatelessWidget {
   final bool isExtended;
-  final PostListEntity postData;
+  final PostEntity postData;
 
   const NewsPublicationWidget({
     Key? key,
@@ -30,6 +30,7 @@ class NewsPublicationWidget extends StatelessWidget {
         color: ThemeHelper.black,
         size: 41,
       ),
+      const SizedBox(height: 16),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -126,7 +127,7 @@ class NewsPublicationWidget extends StatelessWidget {
       CustomTextButtonWidget(
         onPressed: () => context.router.push(
           NewsScreenRoute(
-            postData: postData,
+            postId: postData.id!,
           ),
         ),
         text: 'Читать дальше>>',

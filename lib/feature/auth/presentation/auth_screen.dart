@@ -58,8 +58,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
                 SizedBox(height: 24.h),
                 TextFieldWithTextWidget(
-                  width: 231.w,
-                  height: 39.h,
+                  constraints: BoxConstraints(maxHeight: 39.h, maxWidth: 231.w),
                   controller: nicknameController,
                   title: 'Никнейм',
                 ),

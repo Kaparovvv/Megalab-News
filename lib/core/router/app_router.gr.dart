@@ -15,7 +15,6 @@ import 'package:auto_route/auto_route.dart' as _i10;
 import 'package:flutter/material.dart' as _i11;
 
 import '../../feature/auth/presentation/auth_screen.dart' as _i8;
-import '../../feature/news_feed/domain/entities/post_list_entity.dart' as _i13;
 import '../../feature/news_feed/presentation/screens/news_list_screen/news_list_screen.dart'
     as _i2;
 import '../../feature/news_feed/presentation/screens/news_screen/news_screen.dart'
@@ -66,7 +65,7 @@ class AppRouter extends _i10.RootStackRouter {
         routeData: routeData,
         child: _i4.NewsScreen(
           key: args.key,
-          postData: args.postData,
+          postId: args.postId,
         ),
       );
     },
@@ -212,13 +211,13 @@ class ExampleScreenRouteArgs {
 class NewsScreenRoute extends _i10.PageRouteInfo<NewsScreenRouteArgs> {
   NewsScreenRoute({
     _i11.Key? key,
-    required _i13.PostListEntity postData,
+    required int postId,
   }) : super(
           NewsScreenRoute.name,
           path: 'news',
           args: NewsScreenRouteArgs(
             key: key,
-            postData: postData,
+            postId: postId,
           ),
         );
 
@@ -228,16 +227,16 @@ class NewsScreenRoute extends _i10.PageRouteInfo<NewsScreenRouteArgs> {
 class NewsScreenRouteArgs {
   const NewsScreenRouteArgs({
     this.key,
-    required this.postData,
+    required this.postId,
   });
 
   final _i11.Key? key;
 
-  final _i13.PostListEntity postData;
+  final int postId;
 
   @override
   String toString() {
-    return 'NewsScreenRouteArgs{key: $key, postData: $postData}';
+    return 'NewsScreenRouteArgs{key: $key, postId: $postId}';
   }
 }
 

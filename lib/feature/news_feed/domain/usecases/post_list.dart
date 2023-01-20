@@ -2,17 +2,16 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:megalab_news_app/core/error/failure.dart';
 import 'package:megalab_news_app/core/usecases/usecases.dart';
-import 'package:megalab_news_app/feature/news_feed/domain/entities/post_list_entity.dart';
+import 'package:megalab_news_app/feature/news_feed/domain/entities/post_entity.dart';
 import 'package:megalab_news_app/feature/news_feed/domain/repositories/post_list_repository.dart';
 
-class PostList extends UseCase<List<PostListEntity>, PostListParams> {
+class PostList extends UseCase<List<PostEntity>, PostListParams> {
   final PostListRepository postListRepository;
 
   PostList(this.postListRepository);
 
   @override
-  Future<Either<Failure, List<PostListEntity>>> call(
-      PostListParams params) async {
+  Future<Either<Failure, List<PostEntity>>> call(PostListParams params) async {
     return await postListRepository.getPostList(
       params.search,
       params.tag,

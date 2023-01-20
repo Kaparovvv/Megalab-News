@@ -54,22 +54,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                   SizedBox(height: 31.h),
                   TextFieldWithTextWidget(
-                    width: 231.w,
-                    height: 39.h,
+                    constraints:
+                        BoxConstraints(maxHeight: 39.h, maxWidth: 231.w),
                     controller: lastNameController,
                     title: 'Фамилия',
                   ),
                   SizedBox(height: 16.h),
                   TextFieldWithTextWidget(
-                    width: 231.w,
-                    height: 39.h,
+                    constraints:
+                        BoxConstraints(maxHeight: 39.h, maxWidth: 231.w),
                     controller: nameController,
                     title: 'Имя',
                   ),
                   SizedBox(height: 16.h),
                   TextFieldWithTextWidget(
-                    width: 231.w,
-                    height: 39.h,
+                    constraints:
+                        BoxConstraints(maxHeight: 39.h, maxWidth: 231.w),
                     controller: nicknameController,
                     title: 'Никнейм',
                   ),
