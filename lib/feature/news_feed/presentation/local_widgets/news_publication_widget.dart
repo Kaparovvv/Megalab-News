@@ -9,6 +9,8 @@ import 'package:megalab_news_app/core/global_widgets/custom_iconbutton_widget.da
 import 'package:megalab_news_app/core/global_widgets/custom_textbutton_widget.dart';
 import 'package:megalab_news_app/core/router/app_router.gr.dart';
 import 'package:megalab_news_app/feature/news_feed/domain/entities/post_entity.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/local_widgets/btn_addto_favorites_widget.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/local_widgets/favorites_provider_widget.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/local_widgets/show_dialog_box_widget.dart';
 
 class NewsPublicationWidget extends StatelessWidget {
@@ -38,11 +40,9 @@ class NewsPublicationWidget extends StatelessWidget {
             'Author: ${postData.author}',
             style: TextStyleHelper.f16w400,
           ),
-          CustomIconButtonWidget(
-            onPressed: () {},
-            iconUrl: IconHelper.favourites,
-            color: ThemeHelper.black,
-            size: 24,
+          FavoritesBlocProviderWidget(
+            postId: postData.id!,
+            isLiked: postData.isLiked!,
           ),
         ],
       ),
@@ -102,11 +102,9 @@ class NewsPublicationWidget extends StatelessWidget {
             'Author: ${postData.author}.',
             style: TextStyleHelper.f16w400,
           ),
-          CustomIconButtonWidget(
-            onPressed: () {},
-            iconUrl: IconHelper.favourites,
-            color: ThemeHelper.black,
-            size: 24,
+          FavoritesBlocProviderWidget(
+            postId: postData.id!,
+            isLiked: postData.isLiked!,
           ),
         ],
       ),

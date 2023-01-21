@@ -14,12 +14,16 @@ class CommentDataWidget extends StatelessWidget {
   final String? userComment;
   final String? commentText;
   final double? leftPadding;
+  final int postId;
+  final int parent;
   const CommentDataWidget({
     super.key,
     this.userImage,
     this.userComment,
     this.commentText,
     this.leftPadding,
+    required this.postId,
+    required this.parent,
   });
 
   @override
@@ -83,7 +87,7 @@ class CommentDataWidget extends StatelessWidget {
         BlocBuilder<CommentingCubit, CommentingState>(
           builder: (context, state) {
             if (state is ReplyToTheCommentState) {
-              return const UserCommentFieldWidget();
+              return UserCommentFieldWidget(postId: postId, parent: parent);
             }
             if (state is CancelReplyToComment) {
               return const SizedBox();

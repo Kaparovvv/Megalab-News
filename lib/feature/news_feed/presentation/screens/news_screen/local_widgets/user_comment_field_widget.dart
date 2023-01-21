@@ -5,15 +5,23 @@ import 'package:megalab_news_app/commons/icon_helper.dart';
 import 'package:megalab_news_app/commons/textStyle_helper.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_button_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_textfield_widget.dart';
+import 'package:megalab_news_app/core/global_widgets/loading_indicator_widget.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/blocs/comment_bloc/comment_bloc.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/blocs/post_detail_bloc/post_detail_bloc.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/screens/news_screen/state_blocs/cubit/commenting_cubit.dart';
 
 class UserCommentFieldWidget extends StatelessWidget {
+  final int postId;
+  final int parent;
   const UserCommentFieldWidget({
     Key? key,
+    required this.postId,
+    required this.parent,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController commentController = TextEditingController();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -23,14 +31,43 @@ class UserCommentFieldWidget extends StatelessWidget {
         ),
         CustomTextFieldWidget(
           constraints: BoxConstraints(maxHeight: 27.h, maxWidth: 198.w),
-          controller: TextEditingController(),
+          controller: commentController,
         ),
-        CustomButtonWidget(
-          onPressed: () => context.read<CommentingCubit>().cancelReply(),
-          width: 37,
-          height: 27,
-          isChildText: false,
-          iconUrl: IconHelper.arrowUp,
+        BlocConsumer<CommentBloc, CommentState>(
+          bloc: BlocProvider.of<CommentBloc>(context),
+          listener: (context, state) {
+            if (state is LoadedCommentToCommentState) {
+              context.read<PostDetailBloc>().add(
+                    GetPostDetailEvent(postId: postId),
+                  );
+              commentController.clear();
+              context.read<CommentingCubit>().cancelReply();
+            }
+          },
+          builder: (context, state) {
+            if (state is LoadingCommentToCommentState) {
+              return const LoadingIndicatorWidget(size: 30);
+            }
+            return CustomButtonWidget(
+              onPressed: () {
+                if (commentController.text.isNotEmpty) {
+                  context.read<CommentBloc>().add(
+                        CommentToCommentEvent(
+                          postId: postId,
+                          text: commentController.text,
+                          parent: parent,
+                        ),
+                      );
+                } else {
+                  context.read<CommentingCubit>().cancelReply();
+                }
+              },
+              width: 37,
+              height: 27,
+              isChildText: false,
+              iconUrl: IconHelper.arrowUp,
+            );
+          },
         ),
       ],
     );

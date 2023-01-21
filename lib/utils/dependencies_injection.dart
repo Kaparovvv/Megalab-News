@@ -1,33 +1,5 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:get_it/get_it.dart';
-import 'package:megalab_news_app/core/error/failure_to_message.dart';
-import 'package:megalab_news_app/core/platform/network_info.dart';
-import 'package:megalab_news_app/feature/auth/data/data_sources/user_token_local_data_source.dart';
-import 'package:megalab_news_app/feature/auth/data/data_sources/user_token_remote_data_source.dart';
-import 'package:megalab_news_app/feature/auth/data/repositories/auth_repository.dart';
-import 'package:megalab_news_app/feature/auth/domain/repositories/auth_repository.dart';
-import 'package:megalab_news_app/feature/auth/domain/usecases/auth_user.dart';
-import 'package:megalab_news_app/feature/auth/presentation/bloc/auth_bloc.dart';
-import 'package:megalab_news_app/feature/news_feed/data/data_sources/post_list/post_list_local_data_source.dart';
-import 'package:megalab_news_app/feature/news_feed/data/data_sources/post_list/post_list_remote_data_source.dart';
-import 'package:megalab_news_app/feature/news_feed/data/repositories/post_detail_repository.dart';
-import 'package:megalab_news_app/feature/news_feed/data/repositories/post_list_repository_impl.dart';
-import 'package:megalab_news_app/feature/news_feed/domain/repositories/post_detail_repository.dart';
-import 'package:megalab_news_app/feature/news_feed/domain/repositories/post_list_repository.dart';
-import 'package:megalab_news_app/feature/news_feed/domain/usecases/post_detail.dart';
-import 'package:megalab_news_app/feature/news_feed/domain/usecases/post_list.dart';
-import 'package:megalab_news_app/feature/news_feed/presentation/blocs/post_detail_bloc/post_detail_bloc.dart';
-import 'package:megalab_news_app/feature/news_feed/presentation/blocs/post_list_bloc/post_bloc.dart';
-import 'package:megalab_news_app/feature/register/data/data_sources/user_local_data_source.dart';
-import 'package:megalab_news_app/feature/register/data/data_sources/user_remote_data_source.dart';
-import 'package:megalab_news_app/feature/register/data/repositories/register_repository_impl.dart';
-import 'package:megalab_news_app/feature/register/domain/repositories/register_repository.dart';
-import 'package:megalab_news_app/feature/register/domain/usecases/register_user.dart';
-import 'package:megalab_news_app/feature/register/presentation/blocs/register_bloc/register_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../feature/news_feed/data/data_sources/post_detail/post_detail_local_data_source.dart';
-import '../feature/news_feed/data/data_sources/post_detail/post_detail_remote_data_source.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/blocs/favorite_list_bloc/favorite_list_bloc.dart';
+import 'package:megalab_news_app/utils/dependencies_export.dart';
 
 final getIt = GetIt.instance;
 
@@ -59,6 +31,29 @@ Future<void> init() async {
     ),
   );
 
+  //CommentBloc
+  getIt.registerFactory(
+    () => CommentBloc(
+      commentToComment: getIt.get<CommentToComment>(),
+      commentToPost: getIt.get<CommentToPost>(),
+    ),
+  );
+
+  //FavoritesBloc
+  getIt.registerFactory(
+    () => FavoritesBloc(
+      postToFavorites: getIt.get<PostToFavorites>(),
+      deleteFromFavorites: getIt.get<DeleteFromFavorites>(),
+    ),
+  );
+
+  //FavoritesListBloc
+  getIt.registerFactory(
+    () => FavoriteListBloc(
+      postsFromFavorites: getIt.get<PostsFromFavorites>(),
+    ),
+  );
+
   ///UseCases
 
   //UserData
@@ -79,6 +74,27 @@ Future<void> init() async {
   //PostDetail
   getIt.registerFactory(
     () => PostDetail(getIt()),
+  );
+
+  //CommentToComment
+  getIt.registerFactory(
+    () => CommentToComment(getIt()),
+  );
+
+  //CommentToPost
+  getIt.registerFactory(
+    () => CommentToPost(getIt()),
+  );
+
+  //Favorites
+  getIt.registerFactory(
+    () => PostToFavorites(getIt()),
+  );
+  getIt.registerFactory(
+    () => DeleteFromFavorites(getIt()),
+  );
+  getIt.registerFactory(
+    () => PostsFromFavorites(getIt()),
   );
 
   ///Repository
@@ -112,6 +128,20 @@ Future<void> init() async {
             networkInfo: getIt(),
           ));
 
+  //Comment
+  getIt.registerLazySingleton<CommentRepository>(() => CommentRepositoryExt(
+        localDataSource: getIt(),
+        remoteDataSource: getIt(),
+        networkInfo: getIt(),
+      ));
+
+  //Favorites
+  getIt.registerLazySingleton<FavoritesRepository>(() => FavoritesRepositoryExt(
+        localDataSource: getIt(),
+        remoteDataSource: getIt(),
+        networkInfo: getIt(),
+      ));
+
   ///Data_Source
 
   //UserData
@@ -144,6 +174,22 @@ Future<void> init() async {
   );
   getIt.registerLazySingleton<PostDetailLocalDataSource>(
     () => PostDetailLocalDataSourceImpl(sharedPreferences: getIt()),
+  );
+
+  // CommentData
+  getIt.registerLazySingleton<CommentRemoteDataSource>(
+    () => CommentRemoteDataSourceImpl(),
+  );
+  getIt.registerLazySingleton<CommentLocalDataSource>(
+    () => CommentLocalDataSourceImpl(sharedPreferences: getIt()),
+  );
+
+  //Favorites
+  getIt.registerLazySingleton<FavoritesRemoteDataSource>(
+    () => FavoritesRemoteDataSourceImpl(),
+  );
+  getIt.registerLazySingleton<FavoritesLocalDataSource>(
+    () => FavoritesLocalDataSourceImpl(sharedPreferences: getIt()),
   );
 
   ///Core

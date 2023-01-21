@@ -18,4 +18,5 @@ class IconHelper {
   static const String arrowLeft = 'assets/icons/arrow_left.png';
   static const String arrowUp = 'assets/icons/arrow_up.png';
   static const String cancel = 'assets/icons/cancel.png';
+  static const String heart = 'assets/icons/heart.png';
 }
