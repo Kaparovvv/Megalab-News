@@ -12,8 +12,8 @@ import 'package:megalab_news_app/feature/splash/splash_screen/splash_screen.dart
 @MaterialAutoRouter(
   replaceInRouteName: 'Page Route',
   routes: <AutoRoute>[
-    // AutoRoute(path: 'splashScreen', page: SplashScreen, initial: true),
-    AutoRoute(path: 'newsList', page: NewsListScreen, initial: true),
+    AutoRoute(path: 'splashScreen', page: SplashScreen, initial: true),
+    AutoRoute(path: 'newsList', page: NewsListScreen),
     AutoRoute(path: 'example', page: ExampleScreen),
     AutoRoute(path: 'news', page: NewsScreen),
     AutoRoute(path: 'publication', page: NewsPublicationScreen),

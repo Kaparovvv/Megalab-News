@@ -8,7 +8,7 @@ import 'package:megalab_news_app/core/global_widgets/custom_textfield_widget.dar
 import 'package:megalab_news_app/core/global_widgets/loading_indicator_widget.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/blocs/comment_bloc/comment_bloc.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/blocs/post_detail_bloc/post_detail_bloc.dart';
-import 'package:megalab_news_app/feature/news_feed/presentation/screens/news_screen/state_blocs/cubit/commenting_cubit.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/state_blocs/cubit_commenting/commenting_cubit.dart';
 
 class UserCommentFieldWidget extends StatelessWidget {
   final int postId;

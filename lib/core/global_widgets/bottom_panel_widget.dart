@@ -8,8 +8,17 @@ import 'package:megalab_news_app/core/router/app_router.gr.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_textbutton_widget.dart';
 
 class BottomPanelWidget extends StatelessWidget {
+  final String firstButton;
+  final String secondButton;
+  final Function() firstRoute;
+  final Function() secondRoute;
+
   const BottomPanelWidget({
     Key? key,
+    required this.firstButton,
+    required this.secondButton,
+    required this.firstRoute,
+    required this.secondRoute,
   }) : super(key: key);
 
   @override
@@ -32,21 +41,17 @@ class BottomPanelWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               CustomTextButtonWidget(
-                text: 'Мой профиль',
+                text: firstButton,
                 textStyle:
                     TextStyleHelper.f16w400.copyWith(color: ThemeHelper.white),
-                onPressed: () => context.router.push(
-                  const ProfileScreenRoute(),
-                ),
+                onPressed: () => firstRoute(),
               ),
               SizedBox(width: 26.w),
               CustomTextButtonWidget(
-                text: 'Избранные новости',
+                text: secondButton,
                 textStyle:
                     TextStyleHelper.f16w400.copyWith(color: ThemeHelper.white),
-                onPressed: () => context.router.push(
-                  const SelectedNewsScreenRoute(),
-                ),
+                onPressed: () => secondRoute(),
               ),
             ],
           ),

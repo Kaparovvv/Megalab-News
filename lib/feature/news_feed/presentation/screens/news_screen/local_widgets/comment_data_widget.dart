@@ -7,7 +7,7 @@ import 'package:megalab_news_app/commons/theme_helper.dart';
 import 'package:megalab_news_app/core/global_widgets/cached_network_image_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_textbutton_widget.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/screens/news_screen/local_widgets/user_comment_field_widget.dart';
-import 'package:megalab_news_app/feature/news_feed/presentation/screens/news_screen/state_blocs/cubit/commenting_cubit.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/state_blocs/cubit_commenting/commenting_cubit.dart';
 
 class CommentDataWidget extends StatelessWidget {
   final String? userImage;

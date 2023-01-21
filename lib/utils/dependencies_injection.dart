@@ -1,4 +1,3 @@
-import 'package:megalab_news_app/feature/news_feed/presentation/blocs/favorite_list_bloc/favorite_list_bloc.dart';
 import 'package:megalab_news_app/utils/dependencies_export.dart';
 
 final getIt = GetIt.instance;
@@ -54,6 +53,13 @@ Future<void> init() async {
     ),
   );
 
+  //TagListBloc
+  getIt.registerFactory(
+    () => TagListBloc(
+      tagList: getIt.get<TagList>(),
+    ),
+  );
+
   ///UseCases
 
   //UserData
@@ -97,6 +103,11 @@ Future<void> init() async {
     () => PostsFromFavorites(getIt()),
   );
 
+  //TagList
+  getIt.registerFactory(
+    () => TagList(getIt()),
+  );
+
   ///Repository
 
   //UserData
@@ -137,6 +148,13 @@ Future<void> init() async {
 
   //Favorites
   getIt.registerLazySingleton<FavoritesRepository>(() => FavoritesRepositoryExt(
+        localDataSource: getIt(),
+        remoteDataSource: getIt(),
+        networkInfo: getIt(),
+      ));
+
+  //TagList
+  getIt.registerLazySingleton<TagListRepository>(() => TagListRepositoryExt(
         localDataSource: getIt(),
         remoteDataSource: getIt(),
         networkInfo: getIt(),
@@ -190,6 +208,14 @@ Future<void> init() async {
   );
   getIt.registerLazySingleton<FavoritesLocalDataSource>(
     () => FavoritesLocalDataSourceImpl(sharedPreferences: getIt()),
+  );
+
+  //TagList
+  getIt.registerLazySingleton<TagListRemoteDataSource>(
+    () => TagListRemoteDataSourceImpl(),
+  );
+  getIt.registerLazySingleton<TagListLocalDataSource>(
+    () => TagListLocalDataSourceImpl(sharedPreferences: getIt()),
   );
 
   ///Core

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/screens/news_screen/local_widgets/comment_data_widget.dart';
-import 'package:megalab_news_app/feature/news_feed/presentation/screens/news_screen/state_blocs/cubit/commenting_cubit.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/state_blocs/cubit_commenting/commenting_cubit.dart';
 
 class CommentingProvider extends StatelessWidget {
   final String? userImage;
