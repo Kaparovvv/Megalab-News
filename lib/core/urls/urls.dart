@@ -4,3 +4,4 @@ String postListUrl() => 'post/';
 String postDetailUrl(int postId) => 'post/$postId/';
 String commentUrl() => 'comment/';
 String favoritesUrl() => 'like/';
+String tagListUrl() => 'tag/';

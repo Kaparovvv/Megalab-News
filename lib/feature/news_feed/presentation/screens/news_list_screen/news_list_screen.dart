@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,11 +12,10 @@ import 'package:megalab_news_app/core/global_widgets/bottom_panel_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_divider_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_iconbutton_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/news_sliver_appbar_widget.dart';
-import 'package:megalab_news_app/feature/news_feed/presentation/blocs/post_list_bloc/post_bloc.dart';
+import 'package:megalab_news_app/core/router/app_router.gr.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/local_widgets/filtering_dialog_widget.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/local_widgets/news_publication_widget.dart';
-
-import '../../../../../core/global_widgets/custom_button_widget.dart';
+import 'package:megalab_news_app/utils/dependencies_export.dart';
 
 class NewsListScreen extends StatefulWidget {
   const NewsListScreen({super.key});
@@ -27,11 +27,16 @@ class NewsListScreen extends StatefulWidget {
 class _NewsListScreenState extends State<NewsListScreen> {
   ScrollController? _scrollController;
   late PostBloc _postBloc;
+  late TagListBloc _tagListBloc;
+
+  List<String> listOfTag = [];
 
   @override
   void initState() {
-    _postBloc = BlocProvider.of(context, listen: false);
+    _postBloc = BlocProvider.of(context);
+    _tagListBloc = BlocProvider.of(context);
     _postBloc.add(GetPostListEvent());
+    _tagListBloc.add(GetTagListEvent());
     _scrollController = ScrollController();
     super.initState();
   }
@@ -44,7 +49,11 @@ class _NewsListScreenState extends State<NewsListScreen> {
           children: [
             BlocConsumer<PostBloc, PostState>(
               bloc: _postBloc,
-              listener: (context, state) {},
+              listener: (context, state) {
+                if (state is LoadedPostListState) {
+                  listOfTag.clear();
+                }
+              },
               builder: (context, state) {
                 if (state is LoadedPostListState) {
                   return RefreshIndicatorWidget(
@@ -69,41 +78,65 @@ class _NewsListScreenState extends State<NewsListScreen> {
                                 size: 24,
                                 onPressed: () => showDialog(
                                   context: context,
-                                  builder: (context) =>
-                                      const FilteringDialogWidget(),
+                                  builder: (context) => FilteringDialogWidget(
+                                    listOfTag: listOfTag,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                              var post = state.postList[index];
-                              return Padding(
-                                padding: EdgeInsets.only(
-                                  top: 21.h,
-                                  left: 20.w,
-                                  right: 23.w,
+                        state.postList.isNotEmpty
+                            ? SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                                  (BuildContext context, int index) {
+                                    var post = state.postList[index];
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                        top: 21.h,
+                                        left: 20.w,
+                                        right: 23.w,
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          NewsPublicationWidget(
+                                            postData: post,
+                                            isExtended: false,
+                                          ),
+                                          SizedBox(height: 24.h),
+                                          if (index !=
+                                              (state.postList.length - 1))
+                                            const CustomDividerWidget(),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  childCount: state.postList.length,
                                 ),
-                                child: Column(
-                                  children: [
-                                    NewsPublicationWidget(
-                                      postData: post,
-                                      isExtended: false,
+                              )
+                            : SliverToBoxAdapter(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 250),
+                                  child: Center(
+                                    child: Text(
+                                      'Здесь пока ничего нет',
+                                      style: TextStyleHelper.f16w400,
                                     ),
-                                    SizedBox(height: 24.h),
-                                    if (index != (state.postList.length - 1))
-                                      const CustomDividerWidget(),
-                                  ],
+                                  ),
                                 ),
-                              );
-                            },
-                            childCount: state.postList.length,
+                              ),
+                        SliverToBoxAdapter(
+                          child: BottomPanelWidget(
+                            firstButton: 'Мой профиль',
+                            firstRoute: () => context.router.push(
+                              const ProfileScreenRoute(),
+                            ),
+                            secondButton: 'Избранные новости',
+                            secondRoute: () => context.router.push(
+                              const SelectedNewsScreenRoute(),
+                            ),
                           ),
-                        ),
-                        const SliverToBoxAdapter(
-                          child: BottomPanelWidget(),
                         ),
                       ],
                     ),

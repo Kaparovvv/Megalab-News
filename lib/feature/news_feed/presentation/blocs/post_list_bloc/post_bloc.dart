@@ -33,5 +33,23 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         ),
       );
     });
+
+    on<GetPostListByTagEvent>((event, emit) async {
+      emit(LoadingPostListState());
+      final result = await postList(
+        PostListParams(tag: event.tags),
+      );
+
+      result.fold(
+        (failure) => emit(
+          ErrorPostListState(
+            message: getIt.get<FailureToMessage>().mapFailureToMessage(failure),
+          ),
+        ),
+        (postList) => emit(
+          LoadedPostListState(postList: postList),
+        ),
+      );
+    });
   }
 }

@@ -1,13 +1,19 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:megalab_news_app/commons/icon_helper.dart';
 import 'package:megalab_news_app/commons/textStyle_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_button_widget.dart';
-import 'package:megalab_news_app/core/global_widgets/custom_iconbutton_widget.dart';
+import 'package:megalab_news_app/core/global_widgets/loading_indicator_widget.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/local_widgets/checkbox_widget.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/state_blocs/checkbox_cubit/checkbox_cubit.dart';
+import 'package:megalab_news_app/utils/dependencies_export.dart';
 
 class FilteringDialogWidget extends StatefulWidget {
-  const FilteringDialogWidget({super.key});
+  final List<String> listOfTag;
+  const FilteringDialogWidget({super.key, required this.listOfTag});
 
   @override
   State<FilteringDialogWidget> createState() => _FilteringDialogWidgetState();
@@ -15,8 +21,10 @@ class FilteringDialogWidget extends StatefulWidget {
 
 class _FilteringDialogWidgetState extends State<FilteringDialogWidget> {
   bool isCheckbox = false;
+
   @override
   Widget build(BuildContext context) {
+    TagListBloc tagListBloc = BlocProvider.of(context);
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.r),
@@ -27,43 +35,144 @@ class _FilteringDialogWidgetState extends State<FilteringDialogWidget> {
         left: 27.w,
         right: 27.w,
       ),
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            'Фильтрация',
-            style: TextStyleHelper.f18w500,
-          ),
-          SizedBox(height: 17.h),
-          Row(
+      content: BlocConsumer<TagListBloc, TagListState>(
+        bloc: tagListBloc,
+        listener: (context, state) {},
+        builder: (context, state) {
+          if (state is LoadingTagListState) {
+            return const Center(
+              child: LoadingIndicatorWidget(size: 30),
+            );
+          }
+          if (state is ErrorTagListState) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 200.w,
+                  child: Text(
+                    'Не удалось загрузить данные, повторите попытку',
+                    textAlign: TextAlign.center,
+                    style: TextStyleHelper.f16w400.copyWith(
+                      color: ThemeHelper.black,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20.h),
+                CustomButtonWidget(
+                  txtButton: 'Повторить',
+                  onPressed: () => tagListBloc.add(GetTagListEvent()),
+                  width: 168.w,
+                ),
+              ],
+            );
+          }
+          if (state is LoadedTagListState) {
+            var tagList = state.tagList;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Фильтрация',
+                  style: TextStyleHelper.f18w500,
+                ),
+                SizedBox(height: 17.h),
+                tagList.isNotEmpty
+                    ? SizedBox(
+                        height: 400.h,
+                        width: 250.w,
+                        child: ListView.separated(
+                          itemCount: tagList.length,
+                          itemBuilder: (context, index) {
+                            var tag = tagList[index].name!;
+                            return Row(
+                              children: [
+                                BlocProvider(
+                                  create: (context) => CheckboxCubit(),
+                                  child: CheckboxWidget(
+                                    tag: tag,
+                                    listOfTag: widget.listOfTag,
+                                  ),
+                                ),
+                                SizedBox(width: 18.h),
+                                SizedBox(
+                                  width: 140.w,
+                                  child: Text(
+                                    tagList[index].name ?? 'unknown',
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    textWidthBasis: TextWidthBasis.longestLine,
+                                    style: TextStyleHelper.f16w400.copyWith(
+                                      color: ThemeHelper.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                          separatorBuilder: (context, index) =>
+                              SizedBox(height: 14.h),
+                        ),
+                      )
+                    : Center(
+                        child: Text(
+                          'Список тэгов пуст',
+                          style: TextStyleHelper.f16w400.copyWith(
+                            color: ThemeHelper.black,
+                          ),
+                        ),
+                      ),
+                SizedBox(height: 25.5.h),
+                Align(
+                  alignment: Alignment.center,
+                  child: CustomButtonWidget(
+                    txtButton: tagList.isNotEmpty ? 'Применить' : 'Назад',
+                    onPressed: () async {
+                      log(widget.listOfTag.toString());
+                      if (widget.listOfTag.isNotEmpty) {
+                        context.read<PostBloc>().add(
+                              GetPostListByTagEvent(
+                                tags: widget.listOfTag.join(","),
+                              ),
+                            );
+                        Navigator.pop(context);
+                      } else {
+                        Navigator.pop(context);
+                      }
+                    },
+                    width: 168.w,
+                  ),
+                ),
+              ],
+            );
+          }
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CustomIconButtonWidget(
-                onPressed: () {
-                  setState(() {
-                    isCheckbox = !isCheckbox;
-                  });
-                },
-                iconUrl:
-                    isCheckbox ? IconHelper.checkbox : IconHelper.unchecked,
-                color: isCheckbox ? ThemeHelper.color7E5BC2 : ThemeHelper.black,
-                size: 30,
+              SizedBox(
+                width: 200.w,
+                child: Text(
+                  'Не удалось загрузить данные, повторите попытку',
+                  textAlign: TextAlign.center,
+                  style: TextStyleHelper.f16w400.copyWith(
+                    color: ThemeHelper.black,
+                  ),
+                ),
               ),
-              SizedBox(width: 18.h),
-              Text(
-                'Спорт',
-                style:
-                    TextStyleHelper.f16w400.copyWith(color: ThemeHelper.black),
+              SizedBox(height: 20.h),
+              CustomButtonWidget(
+                txtButton: 'Повторить',
+                onPressed: () => tagListBloc.add(GetTagListEvent()),
+                width: 168.w,
               ),
             ],
-          ),
-          SizedBox(height: 25.5.h),
-          CustomButtonWidget(
-            txtButton: 'Применить',
-            onPressed: () => Navigator.pop(context),
-            width: 168.w,
-          ),
-        ],
+          );
+        },
       ),
     );
   }

@@ -26,7 +26,7 @@ class CustomButtonWidget extends StatelessWidget {
     return ElevatedButton(
       onPressed: () => onPressed(),
       style: ElevatedButton.styleFrom(
-        fixedSize: Size(width.w, height ?? 30.h),
+        fixedSize: Size(width.r, height ?? 30.r),
         elevation: 0,
         backgroundColor: ThemeHelper.color7E5BC2,
         shape: RoundedRectangleBorder(

@@ -10,7 +10,7 @@ abstract class PostEvent extends Equatable {
 class GetPostListEvent extends PostEvent {}
 
 class GetPostListByTagEvent extends PostEvent {
-  final List<String> tags;
+  final String tags;
 
   const GetPostListByTagEvent({required this.tags});
 }

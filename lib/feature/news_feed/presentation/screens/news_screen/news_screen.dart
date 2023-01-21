@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +12,7 @@ import 'package:megalab_news_app/core/global_widgets/loading_indicator_widget.da
 import 'package:megalab_news_app/core/global_widgets/loading_overlay_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/news_sliver_appbar_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/refresh_indicator_widget.dart';
+import 'package:megalab_news_app/core/router/app_router.gr.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/blocs/comment_bloc/comment_bloc.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/blocs/post_detail_bloc/post_detail_bloc.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/local_widgets/news_publication_widget.dart';
@@ -167,8 +169,17 @@ class _NewsScreenState extends State<NewsScreen> {
                             ),
                           ),
                         ),
-                        const SliverToBoxAdapter(
-                          child: BottomPanelWidget(),
+                        SliverToBoxAdapter(
+                          child: BottomPanelWidget(
+                            firstButton: 'Мой профиль',
+                            firstRoute: () => context.router.push(
+                              const ProfileScreenRoute(),
+                            ),
+                            secondButton: 'Избранные новости',
+                            secondRoute: () => context.router.push(
+                              const SelectedNewsScreenRoute(),
+                            ),
+                          ),
                         ),
                       ],
                     ),
