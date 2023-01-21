@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:megalab_news_app/commons/icon_helper.dart';
 import 'package:megalab_news_app/commons/textStyle_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
+import 'package:megalab_news_app/core/global_widgets/btn_try_again_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/loading_overlay_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/refresh_indicator_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/bottom_panel_widget.dart';
@@ -111,26 +112,9 @@ class _NewsListScreenState extends State<NewsListScreen> {
                 if (state is LoadingPostListState) {
                   return const LoadingOverlayWidget();
                 }
-                return Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Повторите попытку',
-                        style: TextStyleHelper.f24w500,
-                      ),
-                      const SizedBox(height: 10),
-                      CustomButtonWidget(
-                        onPressed: () => _postBloc.add(GetPostListEvent()),
-                        width: 150,
-                        isChildText: true,
-                        txtButton: 'Повторить',
-                      ),
-                    ],
-                  ),
+                return ButtonTryAgainWidget(
+                  onPressed: () => _postBloc.add(GetPostListEvent()),
                 );
-                ;
               },
             ),
           ],

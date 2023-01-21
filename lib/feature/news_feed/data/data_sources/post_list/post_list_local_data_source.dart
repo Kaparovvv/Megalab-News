@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:megalab_news_app/core/error/exception.dart';
 import 'package:megalab_news_app/feature/news_feed/data/models/post_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,17 +26,18 @@ class PostListLocalDataSourceImpl implements PostListLocalDataSource {
             .map((post) => PostModel.fromJson(json.decode(post)))
             .toList(),
       );
+    } else {
+      throw CacheException();
     }
-    throw UnimplementedError();
   }
 
   @override
   Future<void> postListDataToCache(List<PostModel> postListModel) {
-    final List<String> jsonPostList =
+    final List<String> postList =
         postListModel.map((post) => json.encode(post.toJson())).toList();
 
-    sharedPreferences.setStringList(CACHED_POST_LIST, jsonPostList);
+    sharedPreferences.setStringList(CACHED_POST_LIST, postList);
     // ignore: void_checks
-    return Future.value(jsonPostList);
+    return Future.value(postList);
   }
 }

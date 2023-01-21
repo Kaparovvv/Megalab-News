@@ -4,11 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:megalab_news_app/commons/icon_helper.dart';
 import 'package:megalab_news_app/commons/textStyle_helper.dart';
 import 'package:megalab_news_app/core/global_widgets/bottom_panel_widget.dart';
+import 'package:megalab_news_app/core/global_widgets/btn_try_again_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_button_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_textfield_widget.dart';
+import 'package:megalab_news_app/core/global_widgets/loading_indicator_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/loading_overlay_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/news_sliver_appbar_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/refresh_indicator_widget.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/blocs/comment_bloc/comment_bloc.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/blocs/post_detail_bloc/post_detail_bloc.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/local_widgets/news_publication_widget.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/screens/news_screen/local_widgets/comment_list_widget.dart';
@@ -22,12 +25,15 @@ class NewsScreen extends StatefulWidget {
 }
 
 class _NewsScreenState extends State<NewsScreen> {
+  TextEditingController commentController = TextEditingController();
   ScrollController? _scrollController;
   late PostDetailBloc _postDetailBloc;
+  late CommentBloc _commentBloc;
 
   @override
   void initState() {
     _postDetailBloc = BlocProvider.of(context, listen: false);
+    _commentBloc = BlocProvider.of(context, listen: false);
     _postDetailBloc.add(GetPostDetailEvent(postId: widget.postId));
     _scrollController = ScrollController();
     super.initState();
@@ -43,6 +49,13 @@ class _NewsScreenState extends State<NewsScreen> {
             BlocConsumer<PostDetailBloc, PostDetailState>(
               listener: (context, state) {},
               builder: (context, state) {
+                if (state is ErrorPostDetailState) {
+                  return ButtonTryAgainWidget(
+                    onPressed: () => _postDetailBloc.add(
+                      GetPostDetailEvent(postId: postId),
+                    ),
+                  );
+                }
                 if (state is LoadingPostDetailState) {
                   return const LoadingOverlayWidget();
                 }
@@ -93,6 +106,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                 ),
                                 child: CommentListWidget(
                                   commentData: commentList,
+                                  postId: postId,
                                 ),
                               );
                             },
@@ -112,16 +126,42 @@ class _NewsScreenState extends State<NewsScreen> {
                               children: [
                                 CustomTextFieldWidget(
                                   constraints: BoxConstraints(
-                                      maxHeight: 38.h, maxWidth: 230.w),
+                                    maxHeight: 38.h,
+                                    maxWidth: 230.w,
+                                  ),
                                   hinText: 'Напишите комментарий',
-                                  controller: TextEditingController(),
+                                  controller: commentController,
                                 ),
-                                CustomButtonWidget(
-                                  onPressed: () {},
-                                  width: 37,
-                                  height: 38,
-                                  isChildText: false,
-                                  iconUrl: IconHelper.arrowUp,
+                                BlocConsumer<CommentBloc, CommentState>(
+                                  bloc: _commentBloc,
+                                  listener: (context, state) {
+                                    if (state is LoadedCommentToPostState) {
+                                      _postDetailBloc.add(
+                                        GetPostDetailEvent(
+                                            postId: widget.postId),
+                                      );
+                                      commentController.clear();
+                                    }
+                                  },
+                                  builder: (context, state) {
+                                    if (state is LoadingCommentToPostState) {
+                                      return const LoadingIndicatorWidget(
+                                        size: 30,
+                                      );
+                                    }
+                                    return CustomButtonWidget(
+                                      onPressed: () => _commentBloc.add(
+                                        CommentToPostEvent(
+                                          postId: postId,
+                                          text: commentController.text,
+                                        ),
+                                      ),
+                                      width: 37,
+                                      height: 38,
+                                      isChildText: false,
+                                      iconUrl: IconHelper.arrowUp,
+                                    );
+                                  },
                                 ),
                               ],
                             ),
@@ -134,26 +174,7 @@ class _NewsScreenState extends State<NewsScreen> {
                     ),
                   );
                 }
-                return Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Повторите попытку',
-                        style: TextStyleHelper.f24w500,
-                      ),
-                      const SizedBox(height: 10),
-                      CustomButtonWidget(
-                        onPressed: () => _postDetailBloc
-                            .add(GetPostDetailEvent(postId: postId)),
-                        width: 150,
-                        isChildText: true,
-                        txtButton: 'Повторить',
-                      ),
-                    ],
-                  ),
-                );
+                return const SizedBox();
               },
             ),
           ],

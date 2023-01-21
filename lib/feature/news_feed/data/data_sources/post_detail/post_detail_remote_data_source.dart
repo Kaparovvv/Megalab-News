@@ -20,7 +20,7 @@ class PostDetailRemoteDataSourceImpl implements PostDetailRemoteDataSource {
     );
 
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      log('Get POst Detail statusMessage ======= ${response.statusMessage}');
+      log('Get Post Detail statusMessage ======= ${response.statusMessage}');
       PostModel postModel = PostModel.fromJson(response.data);
       return postModel;
     } else {

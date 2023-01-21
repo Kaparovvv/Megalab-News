@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:megalab_news_app/core/error/failure_to_message.dart';
 import 'package:megalab_news_app/feature/news_feed/domain/entities/post_entity.dart';
-import 'package:megalab_news_app/feature/news_feed/domain/usecases/post_detail.dart';
+import 'package:megalab_news_app/feature/news_feed/domain/usecases/post/post_detail.dart';
 import 'package:megalab_news_app/utils/dependencies_injection.dart';
 
 part 'post_detail_event.dart';

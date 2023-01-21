@@ -13,22 +13,22 @@ class PostList extends UseCase<List<PostEntity>, PostListParams> {
   @override
   Future<Either<Failure, List<PostEntity>>> call(PostListParams params) async {
     return await postListRepository.getPostList(
-      params.search,
-      params.tag,
-      params.author,
+      params.search ?? '',
+      params.tag ?? '',
+      params.author ?? '',
     );
   }
 }
 
 class PostListParams extends Equatable {
-  final String search;
-  final String tag;
-  final String author;
+  final String? search;
+  final String? tag;
+  final String? author;
 
   const PostListParams({
-    required this.search,
-    required this.tag,
-    required this.author,
+    this.search,
+    this.tag,
+    this.author,
   });
 
   @override

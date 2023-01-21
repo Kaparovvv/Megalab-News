@@ -8,12 +8,16 @@ class CommentingProvider extends StatelessWidget {
   final String? userComment;
   final String? commentText;
   final double? leftPadding;
+  final int postId;
+  final int parent;
   const CommentingProvider({
     super.key,
     this.userImage,
     this.userComment,
     this.commentText,
     this.leftPadding,
+    required this.postId,
+    required this.parent,
   });
 
   @override
@@ -25,6 +29,8 @@ class CommentingProvider extends StatelessWidget {
         userComment: userComment,
         commentText: commentText,
         leftPadding: leftPadding,
+        postId: postId,
+        parent: parent,
       ),
     );
   }
