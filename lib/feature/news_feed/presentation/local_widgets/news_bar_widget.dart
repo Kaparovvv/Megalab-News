@@ -21,7 +21,7 @@ class NewsBarWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const UpperControlPanelWidget(theme: ThemeHelper.white),
+          // const UpperControlPanelWidget(theme: ThemeHelper.white),
           Padding(
             padding: EdgeInsets.only(top: 62.h),
             child: Text(

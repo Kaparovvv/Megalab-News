@@ -37,7 +37,7 @@ class ShowDialogBoxWidget extends StatelessWidget {
                 onPressed: () => Navigator.pop(context),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
-                icon: Icon(
+                icon: const Icon(
                   Icons.close_outlined,
                   color: ThemeHelper.black,
                 ),

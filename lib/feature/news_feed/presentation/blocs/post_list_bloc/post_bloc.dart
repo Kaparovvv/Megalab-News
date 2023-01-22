@@ -51,5 +51,23 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         ),
       );
     });
+
+    on<GetPostListByQueryEvent>((event, emit) async {
+      emit(LoadingPostListState());
+      final result = await postList(
+        PostListParams(search: event.query),
+      );
+
+      result.fold(
+        (failure) => emit(
+          ErrorPostListState(
+            message: getIt.get<FailureToMessage>().mapFailureToMessage(failure),
+          ),
+        ),
+        (postList) => emit(
+          LoadedPostListState(postList: postList),
+        ),
+      );
+    });
   }
 }

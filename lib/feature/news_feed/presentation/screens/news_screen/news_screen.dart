@@ -73,6 +73,8 @@ class _NewsScreenState extends State<NewsScreen> {
                       slivers: <Widget>[
                         NewsSliverAppBarWidget(
                           scrollController: _scrollController!,
+                          isSearchButton: false,
+                          onSearch: () {},
                         ),
                         SliverToBoxAdapter(
                           child: Padding(

@@ -6,7 +6,7 @@ import 'package:megalab_news_app/feature/news_feed/presentation/screens/news_lis
 import 'package:megalab_news_app/feature/profile/presentation/screens/news_publication_screen/news_publication_screen.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/screens/news_screen/news_screen.dart';
 import 'package:megalab_news_app/feature/profile/presentation/screens/profile_screen/profile_screen.dart';
-import 'package:megalab_news_app/feature/news_feed/presentation/screens/selected_news_screen/selected_news_screen.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/screens/favorites_news_screen/favorites_news_screen.dart';
 import 'package:megalab_news_app/feature/splash/splash_screen/splash_screen.dart';
 
 @MaterialAutoRouter(
