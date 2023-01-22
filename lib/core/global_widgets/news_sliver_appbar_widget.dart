@@ -8,8 +8,14 @@ import 'package:megalab_news_app/core/global_widgets/uppercontrolpanel_widget.da
 // ignore: must_be_immutable
 class NewsSliverAppBarWidget extends StatefulWidget {
   ScrollController scrollController;
-  NewsSliverAppBarWidget({Key? key, required this.scrollController})
-      : super(key: key);
+  final bool isSearchButton;
+  final Function() onSearch;
+  NewsSliverAppBarWidget({
+    Key? key,
+    required this.scrollController,
+    required this.isSearchButton,
+    required this.onSearch,
+  }) : super(key: key);
 
   @override
   State<NewsSliverAppBarWidget> createState() => _NewsSliverAppBarWidgetState();
@@ -64,7 +70,11 @@ class _NewsSliverAppBarWidgetState extends State<NewsSliverAppBarWidget> {
       automaticallyImplyLeading: false,
       backgroundColor: ThemeHelper.color151515,
       stretch: true,
-      title: const UpperControlPanelWidget(theme: ThemeHelper.white),
+      title: UpperControlPanelWidget(
+        theme: ThemeHelper.white,
+        isSearchButton: widget.isSearchButton,
+        onSearch: () => widget.onSearch(),
+      ),
       flexibleSpace: FlexibleSpaceBar(
         title: AnimatedDefaultTextStyle(
           duration: const Duration(milliseconds: 300),

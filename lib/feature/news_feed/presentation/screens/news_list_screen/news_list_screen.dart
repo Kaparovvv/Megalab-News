@@ -7,6 +7,7 @@ import 'package:megalab_news_app/commons/textStyle_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
 import 'package:megalab_news_app/core/global_widgets/btn_try_again_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/loading_overlay_widget.dart';
+import 'package:megalab_news_app/core/global_widgets/pop_up_search_field.dart';
 import 'package:megalab_news_app/core/global_widgets/refresh_indicator_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/bottom_panel_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_divider_widget.dart';
@@ -25,6 +26,7 @@ class NewsListScreen extends StatefulWidget {
 }
 
 class _NewsListScreenState extends State<NewsListScreen> {
+  TextEditingController searchController = TextEditingController();
   ScrollController? _scrollController;
   late PostBloc _postBloc;
   late TagListBloc _tagListBloc;
@@ -52,6 +54,7 @@ class _NewsListScreenState extends State<NewsListScreen> {
               listener: (context, state) {
                 if (state is LoadedPostListState) {
                   listOfTag.clear();
+                  searchController.clear();
                 }
               },
               builder: (context, state) {
@@ -66,6 +69,22 @@ class _NewsListScreenState extends State<NewsListScreen> {
                       slivers: <Widget>[
                         NewsSliverAppBarWidget(
                           scrollController: _scrollController!,
+                          isSearchButton: true,
+                          onSearch: () => showDialog(
+                            context: context,
+                            builder: (context) => PopUpSearchField(
+                              controller: searchController,
+                              onPressed: () {
+                                if (searchController.text.isNotEmpty) {
+                                  _postBloc.add(
+                                    GetPostListByQueryEvent(
+                                      query: searchController.text,
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                          ),
                         ),
                         SliverToBoxAdapter(
                           child: Align(

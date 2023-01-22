@@ -15,12 +15,12 @@ import 'package:auto_route/auto_route.dart' as _i10;
 import 'package:flutter/material.dart' as _i11;
 
 import '../../feature/auth/presentation/auth_screen.dart' as _i8;
+import '../../feature/news_feed/presentation/screens/favorites_news_screen/favorites_news_screen.dart'
+    as _i9;
 import '../../feature/news_feed/presentation/screens/news_list_screen/news_list_screen.dart'
     as _i2;
 import '../../feature/news_feed/presentation/screens/news_screen/news_screen.dart'
     as _i4;
-import '../../feature/news_feed/presentation/screens/selected_news_screen/selected_news_screen.dart'
-    as _i9;
 import '../../feature/profile/presentation/screens/news_publication_screen/news_publication_screen.dart'
     as _i5;
 import '../../feature/profile/presentation/screens/profile_screen/profile_screen.dart'

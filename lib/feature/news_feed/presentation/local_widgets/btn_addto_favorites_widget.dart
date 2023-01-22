@@ -4,6 +4,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:megalab_news_app/commons/icon_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_iconbutton_widget.dart';
+import 'package:megalab_news_app/feature/news_feed/presentation/blocs/favorite_list_bloc/favorite_list_bloc.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/blocs/favorites_bloc/favorites_bloc.dart';
 
 class ButtonAddToFavoritesWidget extends StatefulWidget {
@@ -48,7 +49,9 @@ class _ButtonAddToFavoritesWidgetState
             size: 24,
           );
         }
-        if (state is DeletePostFromFavoritesEvent) {
+        if (state is LoadedDeleteFromFavoritesState) {
+          BlocProvider.of<FavoriteListBloc>(context)
+              .add(GetFromFavoritesListEvent());
           return CustomIconButtonWidget(
             onPressed: () => _favoritesBloc.add(
               PostToFavoritesEvent(postId: widget.postId),

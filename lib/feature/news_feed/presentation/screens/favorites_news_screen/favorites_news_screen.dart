@@ -54,8 +54,10 @@ class _SelectedNewsScreenState extends State<SelectedNewsScreen> {
                   automaticallyImplyLeading: true,
                   elevation: 0,
                   backgroundColor: Colors.transparent,
-                  title: const UpperControlPanelWidget(
+                  title: UpperControlPanelWidget(
                     theme: ThemeHelper.color7E5BC2,
+                    isSearchButton: false,
+                    onSearch: () {},
                   ),
                 ),
                 body: SafeArea(
@@ -111,7 +113,7 @@ class _SelectedNewsScreenState extends State<SelectedNewsScreen> {
                             : SliverToBoxAdapter(
                                 child: Padding(
                                   padding:
-                                      const EdgeInsets.symmetric(vertical: 150),
+                                      const EdgeInsets.symmetric(vertical: 250),
                                   child: Center(
                                     child: Text(
                                       'Здесь пока ничего нет',
@@ -148,8 +150,11 @@ class _SelectedNewsScreenState extends State<SelectedNewsScreen> {
                 automaticallyImplyLeading: true,
                 elevation: 0,
                 backgroundColor: Colors.transparent,
-                title: const UpperControlPanelWidget(
-                    theme: ThemeHelper.color7E5BC2),
+                title: UpperControlPanelWidget(
+                  theme: ThemeHelper.color7E5BC2,
+                  isSearchButton: false,
+                  onSearch: () {},
+                ),
               ),
               body: ButtonTryAgainWidget(
                 onPressed: () => _favoriteListBloc.add(
