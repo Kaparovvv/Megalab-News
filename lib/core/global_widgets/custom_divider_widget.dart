@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
 
 class CustomDividerWidget extends StatelessWidget {

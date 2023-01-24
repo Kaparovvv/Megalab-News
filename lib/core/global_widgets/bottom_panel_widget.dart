@@ -1,10 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:megalab_news_app/commons/images_helper.dart';
 import 'package:megalab_news_app/commons/textStyle_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
-import 'package:megalab_news_app/core/router/app_router.gr.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_textbutton_widget.dart';
 
 class BottomPanelWidget extends StatelessWidget {

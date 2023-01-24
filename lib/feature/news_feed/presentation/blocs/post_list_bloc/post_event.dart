@@ -22,7 +22,11 @@ class GetPostListByQueryEvent extends PostEvent {
 }
 
 class GetPostListByAuthorEvent extends PostEvent {
+  final String query;
   final String author;
 
-  const GetPostListByAuthorEvent({required this.author});
+  const GetPostListByAuthorEvent({
+    required this.author,
+    required this.query,
+  });
 }

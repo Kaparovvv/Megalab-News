@@ -1,26 +1,26 @@
 import 'dart:convert';
 
 import 'package:megalab_news_app/core/error/exception.dart';
-import 'package:megalab_news_app/feature/register/data/models/user_data_model.dart';
+import 'package:megalab_news_app/feature/register/data/models/register_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class UserLocalDataSource {
-  Future<UserDataModel> getUserDataFromCache();
-  Future<void> userDataToCache(UserDataModel userDataModel);
+  Future<RegisterModel> getUserDataFromCache();
+  Future<void> userDataToCache(RegisterModel registerModel);
 }
 
-const CACHED_USER_DATA = 'CACHED_USER_DATA';
+const CACHED_RESPONSE_DATA = 'CACHED_RESPONSE_DATA';
 
 class UserLocalDataSourceImpl implements UserLocalDataSource {
   final SharedPreferences sharedPreferences;
   UserLocalDataSourceImpl({required this.sharedPreferences});
 
   @override
-  Future<UserDataModel> getUserDataFromCache() {
-    final jsonUserData = sharedPreferences.getString(CACHED_USER_DATA);
+  Future<RegisterModel> getUserDataFromCache() {
+    final jsonUserData = sharedPreferences.getString(CACHED_RESPONSE_DATA);
     if (jsonUserData!.isNotEmpty) {
       return Future.value(
-        UserDataModel.fromJson(
+        RegisterModel.fromJson(
           json.decode(jsonUserData),
         ),
       );
@@ -30,11 +30,11 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   }
 
   @override
-  Future<void> userDataToCache(UserDataModel userDataModel) {
+  Future<void> userDataToCache(RegisterModel registerModel) {
     return sharedPreferences.setString(
-      CACHED_USER_DATA,
+      CACHED_RESPONSE_DATA,
       json.encode(
-        userDataModel.toJson(),
+        registerModel.toJson(),
       ),
     );
   }

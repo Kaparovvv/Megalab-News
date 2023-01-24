@@ -15,11 +15,15 @@ import 'package:megalab_news_app/feature/news_feed/presentation/local_widgets/sh
 class NewsPublicationWidget extends StatelessWidget {
   final bool isExtended;
   final PostEntity postData;
+  final bool isDeleteButton;
+  final void Function()? deletePost;
 
   const NewsPublicationWidget({
     Key? key,
     required this.isExtended,
     required this.postData,
+    this.isDeleteButton = false,
+    this.deletePost,
   }) : super(key: key);
 
   @override
@@ -73,14 +77,27 @@ class NewsPublicationWidget extends StatelessWidget {
         style: TextStyleHelper.f16w400,
       ),
       SizedBox(height: 24.h),
-      CustomIconButtonWidget(
-        iconUrl: IconHelper.share,
-        color: ThemeHelper.color858080,
-        size: 24,
-        onPressed: () => showDialog(
-          context: context,
-          builder: (context) => const ShowDialogBoxWidget(),
-        ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CustomIconButtonWidget(
+            iconUrl: IconHelper.share,
+            color: ThemeHelper.color858080,
+            size: 24,
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) => const ShowDialogBoxWidget(),
+            ),
+          ),
+          isDeleteButton
+              ? CustomIconButtonWidget(
+                  iconUrl: IconHelper.delete,
+                  color: ThemeHelper.color2D4EC2,
+                  size: 24,
+                  onPressed: () => deletePost!(),
+                )
+              : const SizedBox(),
+        ],
       ),
     ];
     final List<Widget> briefPublication = [
@@ -125,6 +142,8 @@ class NewsPublicationWidget extends StatelessWidget {
         onPressed: () => context.router.push(
           NewsScreenRoute(
             postId: postData.id!,
+            isDeleteButton: isDeleteButton,
+            deletePost: () => deletePost!(),
           ),
         ),
         text: 'Читать дальше>>',
@@ -134,14 +153,27 @@ class NewsPublicationWidget extends StatelessWidget {
         ),
       ),
       SizedBox(height: 16.h),
-      CustomIconButtonWidget(
-        iconUrl: IconHelper.share,
-        color: ThemeHelper.color858080,
-        size: 24,
-        onPressed: () => showDialog(
-          context: context,
-          builder: (context) => const ShowDialogBoxWidget(),
-        ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CustomIconButtonWidget(
+            iconUrl: IconHelper.share,
+            color: ThemeHelper.color858080,
+            size: 24,
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) => const ShowDialogBoxWidget(),
+            ),
+          ),
+          isDeleteButton
+              ? CustomIconButtonWidget(
+                  iconUrl: IconHelper.delete,
+                  color: ThemeHelper.color2D4EC2,
+                  size: 24,
+                  onPressed: () => deletePost!(),
+                )
+              : const SizedBox(),
+        ],
       ),
     ];
     return Column(

@@ -12,7 +12,7 @@ class RegisterInitial extends RegisterState {}
 class LoadingRegisterState extends RegisterState {}
 
 class LoadedRegisterState extends RegisterState {
-  final UserEntity userEntity;
+  final RegisterEntity userEntity;
 
   const LoadedRegisterState({required this.userEntity});
 

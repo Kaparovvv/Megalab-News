@@ -17,7 +17,11 @@ class FavoriteListBloc extends Bloc<FavoriteListEvent, FavoriteListState> {
       final result = await postsFromFavorites(const PostListParams());
 
       result.fold(
-        (failure) => getIt.get<FailureToMessage>().mapFailureToMessage(failure),
+        (failure) => emit(
+          ErrorGetFromFavoritesState(
+            message: getIt.get<FailureToMessage>().mapFailureToMessage(failure),
+          ),
+        ),
         (favoritesList) => emit(
           LoadedGetFromFavoritesState(favoritesList: favoritesList),
         ),

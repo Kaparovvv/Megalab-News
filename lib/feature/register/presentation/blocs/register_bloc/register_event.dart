@@ -11,7 +11,6 @@ class UserRegisterEvent extends RegisterEvent {
   final String nickname;
   final String name;
   final String lastName;
-  // final String profileImage;
   final String password;
   final String password2;
 
@@ -19,7 +18,6 @@ class UserRegisterEvent extends RegisterEvent {
     required this.nickname,
     required this.name,
     required this.lastName,
-    // required this.profileImage,
     required this.password,
     required this.password2,
   });

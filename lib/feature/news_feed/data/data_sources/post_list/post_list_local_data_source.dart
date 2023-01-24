@@ -20,7 +20,6 @@ class PostListLocalDataSourceImpl implements PostListLocalDataSource {
   Future<List<PostModel>> getPostListDataFromCache() {
     final jsonPostList = sharedPreferences.getStringList(CACHED_POST_LIST);
     if (jsonPostList!.isNotEmpty) {
-      print('Get Posts from Cache ============  ${jsonPostList.length}');
       return Future.value(
         jsonPostList
             .map((post) => PostModel.fromJson(json.decode(post)))

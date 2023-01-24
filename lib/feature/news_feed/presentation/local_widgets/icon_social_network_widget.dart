@@ -16,7 +16,7 @@ class IconSocialNetworkWidget extends StatelessWidget {
     return Container(
       width: 50.w,
       height: 50.h,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         shape: BoxShape.circle,
         color: ThemeHelper.colorFBF9FB,
       ),

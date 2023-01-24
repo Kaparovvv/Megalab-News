@@ -4,6 +4,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:megalab_news_app/commons/icon_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_iconbutton_widget.dart';
+import 'package:megalab_news_app/core/global_widgets/custom_snackbar.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/blocs/favorite_list_bloc/favorite_list_bloc.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/blocs/favorites_bloc/favorites_bloc.dart';
 
@@ -35,7 +36,19 @@ class _ButtonAddToFavoritesWidgetState
   Widget build(BuildContext context) {
     return BlocConsumer<FavoritesBloc, FavoritesState>(
       bloc: _favoritesBloc,
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is LoadedDeleteFromFavoritesState) {
+          BlocProvider.of<FavoriteListBloc>(context)
+              .add(GetFromFavoritesListEvent());
+        }
+        if (state is ErrorDeleteFromFavoritesState) {
+          showCustomSnackBar(context, state.message);
+        }
+
+        if (state is ErrorToFavoritesState) {
+          showCustomSnackBar(context, state.message);
+        }
+      },
       builder: (context, state) {
         if (state is LoadingToFavoritesState) {
           return LoadingAnimationWidget.beat(
@@ -50,8 +63,6 @@ class _ButtonAddToFavoritesWidgetState
           );
         }
         if (state is LoadedDeleteFromFavoritesState) {
-          BlocProvider.of<FavoriteListBloc>(context)
-              .add(GetFromFavoritesListEvent());
           return CustomIconButtonWidget(
             onPressed: () => _favoritesBloc.add(
               PostToFavoritesEvent(postId: widget.postId),

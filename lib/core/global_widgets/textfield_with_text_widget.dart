@@ -5,20 +5,22 @@ import 'package:megalab_news_app/commons/theme_helper.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_textfield_widget.dart';
 
 class TextFieldWithTextWidget extends StatelessWidget {
-  final BoxConstraints constraints;
+  final FormFieldValidator<String>? validate;
   final TextEditingController controller;
   final String title;
   final TextInputType? keyboardType;
   final int? maxLines;
   final double? radius;
+  final BoxConstraints? constraints;
   const TextFieldWithTextWidget({
     Key? key,
-    required this.constraints,
     required this.controller,
     required this.title,
     this.keyboardType,
     this.maxLines,
     this.radius,
+    this.validate,
+    this.constraints,
   }) : super(key: key);
 
   @override
@@ -32,12 +34,12 @@ class TextFieldWithTextWidget extends StatelessWidget {
         ),
         SizedBox(height: 8.h),
         CustomTextFieldWidget(
-          constraints: constraints,
           controller: controller,
           keyboardType: keyboardType,
           maxLines: maxLines,
           radius: radius,
-          onChanged: (p0) {},
+          validate: validate,
+          constraints: constraints,
         ),
       ],
     );

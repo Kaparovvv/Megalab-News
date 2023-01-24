@@ -30,7 +30,7 @@ class UserCommentFieldWidget extends StatelessWidget {
           style: TextStyleHelper.f18w500,
         ),
         CustomTextFieldWidget(
-          constraints: BoxConstraints(maxHeight: 27.h, maxWidth: 198.w),
+          constraints: BoxConstraints(maxHeight: 27.h, maxWidth: 200.w),
           controller: commentController,
         ),
         BlocConsumer<CommentBloc, CommentState>(
@@ -62,8 +62,8 @@ class UserCommentFieldWidget extends StatelessWidget {
                   context.read<CommentingCubit>().cancelReply();
                 }
               },
-              width: 37,
-              height: 27,
+              width: 50.w,
+              height: 27.h,
               isChildText: false,
               iconUrl: IconHelper.arrowUp,
             );

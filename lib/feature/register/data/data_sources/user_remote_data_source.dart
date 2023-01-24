@@ -3,15 +3,14 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:megalab_news_app/core/error/exception.dart';
 import 'package:megalab_news_app/core/urls/urls.dart';
-import 'package:megalab_news_app/feature/register/data/models/user_data_model.dart';
+import 'package:megalab_news_app/feature/register/data/models/register_model.dart';
 import 'package:megalab_news_app/api/api_requester/api_requester.dart';
 
 abstract class UserRemoteDataSource {
-  Future<UserDataModel> registerUser(
+  Future<RegisterModel> registerUser(
     String nickname,
     String name,
     String lastName,
-    // String profileImage,
     String password,
     String password2,
   );
@@ -19,11 +18,10 @@ abstract class UserRemoteDataSource {
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   @override
-  Future<UserDataModel> registerUser(
+  Future<RegisterModel> registerUser(
     String nickname,
     String name,
     String lastName,
-    // String profileImage,
     String password,
     String password2,
   ) async {
@@ -36,10 +34,10 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       'password': password,
       'password2': password2,
     });
+    log('Register statusMessage ======= ${response.statusMessage}');
 
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      log('Register statusMessage ======= ${response.statusMessage}');
-      UserDataModel userDataModel = UserDataModel.fromJson(response.data);
+      RegisterModel userDataModel = RegisterModel.fromJson(response.data);
       log('Register response ======= ${response.data}');
 
       return userDataModel;

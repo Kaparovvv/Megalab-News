@@ -11,137 +11,123 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i10;
-import 'package:flutter/material.dart' as _i11;
+import 'package:auto_route/auto_route.dart' as _i9;
+import 'package:flutter/material.dart' as _i10;
 
-import '../../feature/auth/presentation/auth_screen.dart' as _i8;
+import '../../feature/auth/presentation/auth_screen.dart' as _i7;
 import '../../feature/news_feed/presentation/screens/favorites_news_screen/favorites_news_screen.dart'
-    as _i9;
+    as _i8;
 import '../../feature/news_feed/presentation/screens/news_list_screen/news_list_screen.dart'
     as _i2;
 import '../../feature/news_feed/presentation/screens/news_screen/news_screen.dart'
-    as _i4;
+    as _i3;
 import '../../feature/profile/presentation/screens/news_publication_screen/news_publication_screen.dart'
-    as _i5;
+    as _i4;
 import '../../feature/profile/presentation/screens/profile_screen/profile_screen.dart'
-    as _i6;
-import '../../feature/register/domain/entities/user_entities.dart' as _i12;
-import '../../feature/register/presentation/screens/example_screen.dart' as _i3;
+    as _i5;
 import '../../feature/register/presentation/screens/registration_screen.dart'
-    as _i7;
+    as _i6;
 import '../../feature/splash/splash_screen/splash_screen.dart' as _i1;
 
-class AppRouter extends _i10.RootStackRouter {
-  AppRouter([_i11.GlobalKey<_i11.NavigatorState>? navigatorKey])
+class AppRouter extends _i9.RootStackRouter {
+  AppRouter([_i10.GlobalKey<_i10.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i10.PageFactory> pagesMap = {
+  final Map<String, _i9.PageFactory> pagesMap = {
     SplashScreenRoute.name: (routeData) {
-      return _i10.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.SplashScreen(),
       );
     },
     NewsListScreenRoute.name: (routeData) {
-      return _i10.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i2.NewsListScreen(),
       );
     },
-    ExampleScreenRoute.name: (routeData) {
-      final args = routeData.argsAs<ExampleScreenRouteArgs>();
-      return _i10.MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: _i3.ExampleScreen(
-          key: args.key,
-          userEntity: args.userEntity,
-        ),
-      );
-    },
     NewsScreenRoute.name: (routeData) {
       final args = routeData.argsAs<NewsScreenRouteArgs>();
-      return _i10.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i4.NewsScreen(
+        child: _i3.NewsScreen(
           key: args.key,
           postId: args.postId,
+          isDeleteButton: args.isDeleteButton,
+          deletePost: args.deletePost,
         ),
       );
     },
     NewsPublicationScreenRoute.name: (routeData) {
-      return _i10.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i5.NewsPublicationScreen(),
+        child: const _i4.NewsPublicationScreen(),
       );
     },
     ProfileScreenRoute.name: (routeData) {
-      return _i10.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i6.ProfileScreen(),
+        child: const _i5.ProfileScreen(),
       );
     },
     RegistrationScreenRoute.name: (routeData) {
-      return _i10.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i7.RegistrationScreen(),
+        child: const _i6.RegistrationScreen(),
       );
     },
     AuthScreenRoute.name: (routeData) {
-      return _i10.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i8.AuthScreen(),
+        child: const _i7.AuthScreen(),
       );
     },
     SelectedNewsScreenRoute.name: (routeData) {
-      return _i10.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i9.SelectedNewsScreen(),
+        child: const _i8.SelectedNewsScreen(),
       );
     },
   };
 
   @override
-  List<_i10.RouteConfig> get routes => [
-        _i10.RouteConfig(
+  List<_i9.RouteConfig> get routes => [
+        _i9.RouteConfig(
           '/#redirect',
           path: '/',
           redirectTo: 'splashScreen',
           fullMatch: true,
         ),
-        _i10.RouteConfig(
+        _i9.RouteConfig(
           SplashScreenRoute.name,
           path: 'splashScreen',
         ),
-        _i10.RouteConfig(
+        _i9.RouteConfig(
           NewsListScreenRoute.name,
           path: 'newsList',
         ),
-        _i10.RouteConfig(
-          ExampleScreenRoute.name,
-          path: 'example',
-        ),
-        _i10.RouteConfig(
+        _i9.RouteConfig(
           NewsScreenRoute.name,
           path: 'news',
         ),
-        _i10.RouteConfig(
+        _i9.RouteConfig(
           NewsPublicationScreenRoute.name,
           path: 'publication',
         ),
-        _i10.RouteConfig(
+        _i9.RouteConfig(
           ProfileScreenRoute.name,
           path: 'profile',
         ),
-        _i10.RouteConfig(
+        _i9.RouteConfig(
           RegistrationScreenRoute.name,
           path: 'registration',
         ),
-        _i10.RouteConfig(
+        _i9.RouteConfig(
           AuthScreenRoute.name,
           path: 'authorization',
         ),
-        _i10.RouteConfig(
+        _i9.RouteConfig(
           SelectedNewsScreenRoute.name,
           path: 'selectedNews',
         ),
@@ -150,7 +136,7 @@ class AppRouter extends _i10.RootStackRouter {
 
 /// generated route for
 /// [_i1.SplashScreen]
-class SplashScreenRoute extends _i10.PageRouteInfo<void> {
+class SplashScreenRoute extends _i9.PageRouteInfo<void> {
   const SplashScreenRoute()
       : super(
           SplashScreenRoute.name,
@@ -162,7 +148,7 @@ class SplashScreenRoute extends _i10.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.NewsListScreen]
-class NewsListScreenRoute extends _i10.PageRouteInfo<void> {
+class NewsListScreenRoute extends _i9.PageRouteInfo<void> {
   const NewsListScreenRoute()
       : super(
           NewsListScreenRoute.name,
@@ -173,51 +159,21 @@ class NewsListScreenRoute extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i3.ExampleScreen]
-class ExampleScreenRoute extends _i10.PageRouteInfo<ExampleScreenRouteArgs> {
-  ExampleScreenRoute({
-    _i11.Key? key,
-    required _i12.UserEntity userEntity,
-  }) : super(
-          ExampleScreenRoute.name,
-          path: 'example',
-          args: ExampleScreenRouteArgs(
-            key: key,
-            userEntity: userEntity,
-          ),
-        );
-
-  static const String name = 'ExampleScreenRoute';
-}
-
-class ExampleScreenRouteArgs {
-  const ExampleScreenRouteArgs({
-    this.key,
-    required this.userEntity,
-  });
-
-  final _i11.Key? key;
-
-  final _i12.UserEntity userEntity;
-
-  @override
-  String toString() {
-    return 'ExampleScreenRouteArgs{key: $key, userEntity: $userEntity}';
-  }
-}
-
-/// generated route for
-/// [_i4.NewsScreen]
-class NewsScreenRoute extends _i10.PageRouteInfo<NewsScreenRouteArgs> {
+/// [_i3.NewsScreen]
+class NewsScreenRoute extends _i9.PageRouteInfo<NewsScreenRouteArgs> {
   NewsScreenRoute({
-    _i11.Key? key,
+    _i10.Key? key,
     required int postId,
+    bool isDeleteButton = false,
+    void Function()? deletePost,
   }) : super(
           NewsScreenRoute.name,
           path: 'news',
           args: NewsScreenRouteArgs(
             key: key,
             postId: postId,
+            isDeleteButton: isDeleteButton,
+            deletePost: deletePost,
           ),
         );
 
@@ -228,21 +184,27 @@ class NewsScreenRouteArgs {
   const NewsScreenRouteArgs({
     this.key,
     required this.postId,
+    this.isDeleteButton = false,
+    this.deletePost,
   });
 
-  final _i11.Key? key;
+  final _i10.Key? key;
 
   final int postId;
 
+  final bool isDeleteButton;
+
+  final void Function()? deletePost;
+
   @override
   String toString() {
-    return 'NewsScreenRouteArgs{key: $key, postId: $postId}';
+    return 'NewsScreenRouteArgs{key: $key, postId: $postId, isDeleteButton: $isDeleteButton, deletePost: $deletePost}';
   }
 }
 
 /// generated route for
-/// [_i5.NewsPublicationScreen]
-class NewsPublicationScreenRoute extends _i10.PageRouteInfo<void> {
+/// [_i4.NewsPublicationScreen]
+class NewsPublicationScreenRoute extends _i9.PageRouteInfo<void> {
   const NewsPublicationScreenRoute()
       : super(
           NewsPublicationScreenRoute.name,
@@ -253,8 +215,8 @@ class NewsPublicationScreenRoute extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i6.ProfileScreen]
-class ProfileScreenRoute extends _i10.PageRouteInfo<void> {
+/// [_i5.ProfileScreen]
+class ProfileScreenRoute extends _i9.PageRouteInfo<void> {
   const ProfileScreenRoute()
       : super(
           ProfileScreenRoute.name,
@@ -265,8 +227,8 @@ class ProfileScreenRoute extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.RegistrationScreen]
-class RegistrationScreenRoute extends _i10.PageRouteInfo<void> {
+/// [_i6.RegistrationScreen]
+class RegistrationScreenRoute extends _i9.PageRouteInfo<void> {
   const RegistrationScreenRoute()
       : super(
           RegistrationScreenRoute.name,
@@ -277,8 +239,8 @@ class RegistrationScreenRoute extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i8.AuthScreen]
-class AuthScreenRoute extends _i10.PageRouteInfo<void> {
+/// [_i7.AuthScreen]
+class AuthScreenRoute extends _i9.PageRouteInfo<void> {
   const AuthScreenRoute()
       : super(
           AuthScreenRoute.name,
@@ -289,8 +251,8 @@ class AuthScreenRoute extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.SelectedNewsScreen]
-class SelectedNewsScreenRoute extends _i10.PageRouteInfo<void> {
+/// [_i8.SelectedNewsScreen]
+class SelectedNewsScreenRoute extends _i9.PageRouteInfo<void> {
   const SelectedNewsScreenRoute()
       : super(
           SelectedNewsScreenRoute.name,
