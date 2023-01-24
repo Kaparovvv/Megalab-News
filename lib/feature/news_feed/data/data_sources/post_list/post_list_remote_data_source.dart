@@ -34,6 +34,7 @@ class PostListRemoteDataSourceImpl implements PostListRemoteDataSource {
 
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       log('Get POst List statusMessage ======= ${response.statusMessage}');
+
       List<PostModel> postListModel =
           response.data.map<PostModel>((el) => PostModel.fromJson(el)).toList();
       return postListModel;

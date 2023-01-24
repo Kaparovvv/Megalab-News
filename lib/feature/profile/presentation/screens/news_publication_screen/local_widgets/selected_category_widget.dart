@@ -30,7 +30,7 @@ class SelectedCategoryWidget extends StatelessWidget {
       ),
       child: Text(
         '#$category',
-        style: TextStyleHelper.f16w400.copyWith(color: ThemeHelper.black),
+        style: TextStyleHelper.f16w400.copyWith(color: ThemeHelper.color7E5BC2),
       ),
     );
   }

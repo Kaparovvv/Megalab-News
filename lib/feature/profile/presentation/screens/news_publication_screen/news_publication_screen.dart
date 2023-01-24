@@ -1,29 +1,48 @@
+import 'dart:io';
+
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:megalab_news_app/commons/textStyle_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
+import 'package:megalab_news_app/commons/validates_helper.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_button_widget.dart';
+import 'package:megalab_news_app/core/global_widgets/custom_snackbar.dart';
+import 'package:megalab_news_app/core/global_widgets/loading_indicator_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/textfield_with_text_widget.dart';
+import 'package:megalab_news_app/core/router/app_router.gr.dart';
 import 'package:megalab_news_app/feature/profile/presentation/screens/news_publication_screen/local_widgets/category_dropdown_widget.dart';
 import 'package:megalab_news_app/feature/profile/presentation/screens/news_publication_screen/local_widgets/load_newscover_widget.dart';
 
-import 'local_widgets/selected_category_widget.dart';
+import '../../blocs/create_post_bloc/create_post_bloc.dart';
 
-class NewsPublicationScreen extends StatelessWidget {
+class NewsPublicationScreen extends StatefulWidget {
   const NewsPublicationScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final List<String> categoryList = [
-      'Спорт',
-      'Детское',
-      'Взрослое',
-      'Экономика',
-    ];
-    // SizeManager sizeManager = SizeManager(context);
-    // double width = MediaQuery.of(context).size.width;
-    // double height = MediaQuery.of(context).size.height;
+  State<NewsPublicationScreen> createState() => _NewsPublicationScreenState();
+}
 
+class _NewsPublicationScreenState extends State<NewsPublicationScreen> {
+  File? _imagePost;
+  String? _tag;
+  TextEditingController titleController = TextEditingController();
+  TextEditingController textController = TextEditingController();
+  TextEditingController shortDescController = TextEditingController();
+
+  late CreatePostBloc _createPostBloc;
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  ValidatesHelper validatesHelper = ValidatesHelper();
+
+  @override
+  void initState() {
+    _createPostBloc = BlocProvider.of(context);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ThemeHelper.white,
       appBar: AppBar(
@@ -35,9 +54,9 @@ class NewsPublicationScreen extends StatelessWidget {
               top: 21.5.h,
               right: 21.5.w,
             ),
-            onPressed: () {},
+            onPressed: () => context.router.navigateBack(),
             constraints: const BoxConstraints(),
-            icon: Icon(
+            icon: const Icon(
               Icons.close_outlined,
               color: ThemeHelper.black,
               size: 30,
@@ -46,58 +65,114 @@ class NewsPublicationScreen extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: 34.w,
-            right: 23.w,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const LoadNewsCoverWidget(),
-              SizedBox(height: 16.h),
-              TextFieldWithTextWidget(
-                title: 'Заголовок',
-                constraints: BoxConstraints(maxHeight: 35.h, maxWidth: 263.w),
-                controller: TextEditingController(),
-                radius: 5,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: 34.w,
+              right: 23.w,
+              bottom: 100.h,
+            ),
+            child: Form(
+              key: _formkey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  LoadNewsCoverWidget(
+                    callback: ((profileImage) => setState(
+                          () => _imagePost = profileImage,
+                        )),
+                  ),
+                  SizedBox(height: 16.h),
+                  TextFieldWithTextWidget(
+                    title: 'Заголовок',
+                    constraints: BoxConstraints(
+                      maxHeight: 35.h,
+                      maxWidth: 263.w,
+                    ),
+                    controller: titleController,
+                    radius: 5,
+                    validate: (value) =>
+                        validatesHelper.titleValidate(value!, 'загаловок'),
+                  ),
+                  SizedBox(height: 16.h),
+                  TextFieldWithTextWidget(
+                    title: 'Краткое описание',
+                    constraints: BoxConstraints(
+                      maxHeight: 35.h,
+                      maxWidth: 263.w,
+                      minHeight: 35.h,
+                      minWidth: 263.w,
+                    ),
+                    controller: shortDescController,
+                    radius: 5,
+                    validate: (value) =>
+                        validatesHelper.titleValidate(value!, 'описание'),
+                  ),
+                  SizedBox(height: 16.h),
+                  TextFieldWithTextWidget(
+                    title: 'Текст новости',
+                    constraints:
+                        BoxConstraints(maxHeight: 95.h, maxWidth: 263.w),
+                    controller: textController,
+                    maxLines: 100,
+                    radius: 5,
+                    validate: (value) =>
+                        validatesHelper.titleValidate(value!, 'текст'),
+                  ),
+                  SizedBox(height: 16.h),
+                  CategoryDropDownWidget(
+                    title: 'Выбрать категорию',
+                    width: 263.w,
+                    height: 35.h,
+                    textStyle: TextStyleHelper.f16w400.copyWith(
+                      color: ThemeHelper.black,
+                    ),
+                    callback: ((tag) => setState(
+                          () => _tag = tag,
+                        )),
+                  ),
+                  SizedBox(height: 38.h),
+                  BlocConsumer<CreatePostBloc, CreatePostState>(
+                    listener: (context, state) {
+                      if (state is ErrorCreatePostState) {
+                        showCustomSnackBar(context, state.message);
+                      }
+                      if (state is LoadedCreatePostState) {
+                        context.router.replace(const ProfileScreenRoute());
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is LoadingCreatePostState) {
+                        return const Center(
+                          child: LoadingIndicatorWidget(size: 30),
+                        );
+                      }
+                      return Align(
+                        alignment: Alignment.topCenter,
+                        child: CustomButtonWidget(
+                          txtButton: 'Создать',
+                          width: 191.w,
+                          onPressed: () {
+                            if (_formkey.currentState!.validate()) {
+                              _createPostBloc.add(
+                                CreateNewsPostEvent(
+                                  title: titleController.text,
+                                  text: textController.text,
+                                  image: _imagePost,
+                                  tag: _tag!,
+                                  shortDesc: shortDescController.text,
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
-              SizedBox(height: 16.h),
-              TextFieldWithTextWidget(
-                title: 'Краткое описание',
-                constraints: BoxConstraints(maxHeight: 35.h, maxWidth: 263.w),
-                controller: TextEditingController(),
-                radius: 5,
-              ),
-              SizedBox(height: 16.h),
-              TextFieldWithTextWidget(
-                title: 'Текст новости',
-                constraints: BoxConstraints(maxHeight: 95.h, maxWidth: 263.w),
-                controller: TextEditingController(),
-                maxLines: 100,
-                radius: 5,
-              ),
-              SizedBox(height: 16.h),
-              CategoryDropDownWidget(
-                title: 'Выбрать категорию',
-                listOfItem: categoryList,
-                width: 263.w,
-                height: 35.h,
-                textStyle:
-                    TextStyleHelper.f16w400.copyWith(color: ThemeHelper.black),
-              ),
-              SizedBox(height: 12.h),
-              const SelectedCategoryWidget(category: 'не выбрано'),
-              SizedBox(height: 38.h),
-              Align(
-                alignment: Alignment.topCenter,
-                child: CustomButtonWidget(
-                  txtButton: 'Создать',
-                  width: 191.w,
-                  onPressed: () {},
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

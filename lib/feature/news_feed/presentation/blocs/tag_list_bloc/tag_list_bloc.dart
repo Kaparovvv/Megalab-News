@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:megalab_news_app/feature/news_feed/domain/entities/tag_list_entity.dart';
-import 'package:megalab_news_app/feature/news_feed/domain/usecases/tag_list/tag_list.dart';
 import 'package:megalab_news_app/utils/dependencies_injection.dart';
 
 import '../../../../../utils/dependencies_export.dart';

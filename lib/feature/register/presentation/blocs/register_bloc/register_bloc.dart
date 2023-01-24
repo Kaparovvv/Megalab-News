@@ -14,11 +14,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emit(LoadingRegisterState());
 
       final result = await registerUser(
-        UserDataParams(
+        RegisterResponseParams(
           nickname: event.nickname,
           name: event.name,
           lastName: event.lastName,
-          // profileImage: event.profileImage,
           password: event.password,
           password2: event.password2,
         ),

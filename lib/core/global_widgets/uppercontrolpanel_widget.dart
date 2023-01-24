@@ -10,13 +10,18 @@ class UpperControlPanelWidget extends StatelessWidget {
   final Color theme;
   final bool isSearchButton;
   final Function() onSearch;
+  final Function()? onLogout;
+
   final bool? isProfileButton;
+  final bool? isLogout;
   const UpperControlPanelWidget({
     Key? key,
     required this.theme,
     this.isSearchButton = true,
     required this.onSearch,
     this.isProfileButton,
+    this.isLogout,
+    this.onLogout,
   }) : super(key: key);
 
   @override
@@ -51,13 +56,20 @@ class UpperControlPanelWidget extends StatelessWidget {
                     size: 22,
                   )
                 : const SizedBox(),
-            SizedBox(width: 18.w),
-            CustomIconButtonWidget(
-              onPressed: () {},
-              iconUrl: IconHelper.menu,
-              color: theme,
-              size: 22,
-            ),
+            isLogout ?? false
+                ? Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(width: 18.w),
+                      CustomIconButtonWidget(
+                        onPressed: () => onLogout!(),
+                        iconUrl: IconHelper.logout,
+                        color: theme,
+                        size: 22,
+                      ),
+                    ],
+                  )
+                : const SizedBox(),
           ],
         ),
       ],

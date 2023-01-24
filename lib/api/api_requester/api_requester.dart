@@ -54,15 +54,29 @@ class ApiRequester {
     }
   }
 
-  Future<Response> toPatch(
+  Future<Response> toCreatePost(
     String url, {
     bool? isToken,
     Map<String, dynamic>? param,
-    required Map<String, dynamic> body,
+    required FormData formData,
   }) async {
     Dio dio = await initDio(isToken: isToken);
     try {
-      return dio.patch(url, queryParameters: param, data: body);
+      return dio.post(url, queryParameters: param, data: formData);
+    } catch (e) {
+      throw CatchException.convertException(e);
+    }
+  }
+
+  Future<Response> toPut(
+    String url, {
+    bool? isToken,
+    Map<String, dynamic>? param,
+    required FormData formData,
+  }) async {
+    Dio dio = await initDio(isToken: isToken);
+    try {
+      return dio.put(url, queryParameters: param, data: formData);
     } catch (e) {
       throw CatchException.convertException(e);
     }

@@ -7,6 +7,7 @@ import 'package:megalab_news_app/commons/theme_helper.dart';
 import 'package:megalab_news_app/core/global_widgets/bottom_panel_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/btn_try_again_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_divider_widget.dart';
+import 'package:megalab_news_app/core/global_widgets/custom_snackbar.dart';
 import 'package:megalab_news_app/core/global_widgets/loading_overlay_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/refresh_indicator_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/uppercontrolpanel_widget.dart';
@@ -40,7 +41,11 @@ class _SelectedNewsScreenState extends State<SelectedNewsScreen> {
       children: [
         BlocConsumer<FavoriteListBloc, FavoriteListState>(
           bloc: _favoriteListBloc,
-          listener: (context, state) {},
+          listener: (context, state) {
+            if (state is ErrorGetFromFavoritesState) {
+              showCustomSnackBar(context, state.message);
+            }
+          },
           builder: (context, state) {
             if (state is LoadingGetFromFavoritesState) {
               return const LoadingOverlayWidget();

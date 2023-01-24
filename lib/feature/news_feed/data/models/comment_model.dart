@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:megalab_news_app/feature/news_feed/domain/entities/comment_entity.dart';
 import 'package:megalab_news_app/feature/news_feed/domain/entities/post_entity.dart';
 
+// ignore: must_be_immutable
 class CommentModel extends CommentEntity {
   CommentModel({
     required id,

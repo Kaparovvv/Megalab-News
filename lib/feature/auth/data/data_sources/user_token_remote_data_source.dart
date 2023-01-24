@@ -19,9 +19,6 @@ class UserTokenRemoteDataSourceImpl implements UserTokenRemoteDataSource {
     String nickname,
     String password,
   ) async {
-    print('nickname ===== $nickname');
-    print('password ===== $password');
-
     ApiRequester requester = ApiRequester();
     Response response = await requester.toPost(authUserUrl(), body: {
       "nickname": nickname,

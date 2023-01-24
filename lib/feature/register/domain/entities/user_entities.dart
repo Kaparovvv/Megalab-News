@@ -1,18 +1,16 @@
 import 'package:equatable/equatable.dart';
 
-class UserEntity extends Equatable {
+class RegisterEntity extends Equatable {
   final int id;
   final String name;
   final String lastName;
   final String nickname;
-  // final String? profileImage;
 
-  const UserEntity({
+  const RegisterEntity({
     required this.id,
     required this.name,
     required this.lastName,
     required this.nickname,
-    // this.profileImage,
   });
 
   @override
@@ -21,6 +19,5 @@ class UserEntity extends Equatable {
         name,
         lastName,
         nickname,
-        // profileImage,
       ];
 }

@@ -6,6 +6,7 @@ import 'package:megalab_news_app/commons/textStyle_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
 
 class PasswordTextFieldWidget extends StatefulWidget {
+  final FormFieldValidator<String>? validate;
   final String title;
   final TextEditingController controller;
 
@@ -13,6 +14,7 @@ class PasswordTextFieldWidget extends StatefulWidget {
     super.key,
     required this.title,
     required this.controller,
+    this.validate,
   });
 
   @override
@@ -23,6 +25,7 @@ class PasswordTextFieldWidget extends StatefulWidget {
 class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
   bool _isObscureWidget = false;
   bool _isObscureText = true;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -40,8 +43,12 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
           style: TextStyleHelper.f14w500.copyWith(decorationThickness: 0),
           obscureText: _isObscureText,
           decoration: InputDecoration(
-            constraints: BoxConstraints(maxHeight: 39.h, maxWidth: 231.w),
+            errorMaxLines: 3,
             contentPadding: EdgeInsets.only(top: 0.5.h, left: 18.w),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.r),
+              borderSide: const BorderSide(color: ThemeHelper.blueAccent),
+            ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
               borderSide: const BorderSide(color: ThemeHelper.colorE4DFDC),
@@ -53,6 +60,10 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
               borderSide: const BorderSide(color: ThemeHelper.red),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.r),
+              borderSide: const BorderSide(color: ThemeHelper.blueAccent),
             ),
             suffixIcon: _isObscureWidget
                 ? IconButton(
@@ -78,8 +89,27 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
                   : _isObscureWidget = false;
             });
           },
+          validator: widget.validate,
         )
       ],
     );
   }
+
+  passValidate(String? password) {
+    String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
+    RegExp regExp = RegExp(pattern);
+    return regExp.hasMatch(password!);
+  }
+
+  // validate() {
+  //   if (!passValidate(widget.controller.text)) {
+  //     setState(() {
+  //       _usernameError = emailError;
+  //       _passwordError = passwordError;
+  //     });
+  //     // show dialog/snackbar to get user attention.
+  //     return;
+  //   }
+  // Continue
+  // }
 }

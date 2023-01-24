@@ -1,12 +1,12 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:megalab_news_app/commons/images_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
+import 'package:megalab_news_app/commons/validates_helper.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_button_widget.dart';
+import 'package:megalab_news_app/core/global_widgets/custom_snackbar.dart';
 import 'package:megalab_news_app/core/global_widgets/loading_indicator_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/textfield_with_text_widget.dart';
 import 'package:megalab_news_app/core/router/app_router.gr.dart';
@@ -23,6 +23,9 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   TextEditingController nicknameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  ValidatesHelper validatesHelper = ValidatesHelper();
 
   late AuthBloc _authBloc;
   @override
@@ -48,50 +51,68 @@ class _AuthScreenState extends State<AuthScreen> {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  ImagesHelper.megalabLogo,
-                  width: 129.w,
-                  height: 29.h,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 44.w),
+              child: Form(
+                key: _formkey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      ImagesHelper.megalabLogo,
+                      width: 129.w,
+                      height: 29.h,
+                    ),
+                    SizedBox(height: 24.h),
+                    TextFieldWithTextWidget(
+                      controller: nicknameController,
+                      title: 'Никнейм',
+                      validate: (value) =>
+                          validatesHelper.titleValidate(value!, 'никнейм'),
+                    ),
+                    SizedBox(height: 16.h),
+                    PasswordTextFieldWidget(
+                      title: 'Пароль',
+                      controller: passwordController,
+                      validate: (value) =>
+                          validatesHelper.passwordValidate(value!),
+                    ),
+                    SizedBox(height: 36.h),
+                    BlocConsumer<AuthBloc, AuthState>(
+                      bloc: _authBloc,
+                      listener: (context, state) {
+                        if (state is LoadedAuthState) {
+                          context.router.replace(const NewsListScreenRoute());
+                        }
+
+                        if (state is ErrorAuthState) {
+                          showCustomSnackBar(context, state.message);
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is LoadingAuthState) {
+                          return const LoadingIndicatorWidget(size: 30);
+                        }
+                        return CustomButtonWidget(
+                          txtButton: 'Войти',
+                          onPressed: () {
+                            if (nicknameController.text.isNotEmpty &&
+                                passwordController.text.isNotEmpty) {
+                              _authBloc.add(
+                                AuthUserEvent(
+                                  nickname: nicknameController.text,
+                                  password: passwordController.text,
+                                ),
+                              );
+                            }
+                          },
+                          width: 168,
+                        );
+                      },
+                    ),
+                  ],
                 ),
-                SizedBox(height: 24.h),
-                TextFieldWithTextWidget(
-                  constraints: BoxConstraints(maxHeight: 39.h, maxWidth: 231.w),
-                  controller: nicknameController,
-                  title: 'Никнейм',
-                ),
-                SizedBox(height: 16.h),
-                PasswordTextFieldWidget(
-                  title: 'Пароль',
-                  controller: passwordController,
-                ),
-                SizedBox(height: 36.h),
-                BlocConsumer<AuthBloc, AuthState>(
-                  bloc: _authBloc,
-                  listener: (context, state) {
-                    if (state is LoadedAuthState) {
-                      context.router.replace(const NewsListScreenRoute());
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state is LoadingAuthState) {
-                      return const LoadingIndicatorWidget(size: 30);
-                    }
-                    return CustomButtonWidget(
-                      txtButton: 'Войти',
-                      onPressed: () => _authBloc.add(
-                        AuthUserEvent(
-                          nickname: nicknameController.text,
-                          password: passwordController.text,
-                        ),
-                      ),
-                      width: 168,
-                    );
-                  },
-                ),
-              ],
+              ),
             ),
           ),
         ),

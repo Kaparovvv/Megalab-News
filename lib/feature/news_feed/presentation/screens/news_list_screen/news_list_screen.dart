@@ -6,6 +6,7 @@ import 'package:megalab_news_app/commons/icon_helper.dart';
 import 'package:megalab_news_app/commons/textStyle_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
 import 'package:megalab_news_app/core/global_widgets/btn_try_again_widget.dart';
+import 'package:megalab_news_app/core/global_widgets/custom_snackbar.dart';
 import 'package:megalab_news_app/core/global_widgets/loading_overlay_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/pop_up_search_field.dart';
 import 'package:megalab_news_app/core/global_widgets/refresh_indicator_widget.dart';
@@ -52,6 +53,9 @@ class _NewsListScreenState extends State<NewsListScreen> {
             BlocConsumer<PostBloc, PostState>(
               bloc: _postBloc,
               listener: (context, state) {
+                if (state is ErrorPostListState) {
+                  showCustomSnackBar(context, state.message);
+                }
                 if (state is LoadedPostListState) {
                   listOfTag.clear();
                   searchController.clear();

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
 import 'package:megalab_news_app/core/router/app_router.gr.dart';
+import 'package:megalab_news_app/feature/profile/presentation/blocs/cubit/edit_button_cubit.dart';
 import 'package:megalab_news_app/utils/dependencies_export.dart';
 import 'package:megalab_news_app/utils/dependencies_injection.dart';
 
@@ -53,6 +54,30 @@ class MyApp extends StatelessWidget {
             create: (_) => TagListBloc(
               tagList: getIt.get<TagList>(),
             ),
+          ),
+          BlocProvider(
+            create: (_) => UserDataBloc(
+              getUserData: getIt.get<GetUserData>(),
+              putUserData: getIt.get<PutUserData>(),
+            ),
+          ),
+          BlocProvider(
+            create: (_) => LogoutBloc(
+              logout: getIt.get<UserLogout>(),
+            ),
+          ),
+          BlocProvider(
+            create: (_) => CreatePostBloc(
+              createPost: getIt.get<CreatePost>(),
+            ),
+          ),
+          BlocProvider(
+            create: (_) => DeletePostBloc(
+              deletePost: getIt.get<DeletePost>(),
+            ),
+          ),
+          BlocProvider(
+            create: (_) => EditButtonCubit(),
           ),
         ],
         child: MaterialApp.router(

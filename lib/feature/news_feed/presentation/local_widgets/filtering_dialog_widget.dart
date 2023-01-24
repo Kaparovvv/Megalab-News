@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:megalab_news_app/commons/textStyle_helper.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_button_widget.dart';
+import 'package:megalab_news_app/core/global_widgets/custom_snackbar.dart';
 import 'package:megalab_news_app/core/global_widgets/loading_indicator_widget.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/local_widgets/checkbox_widget.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/state_blocs/checkbox_cubit/checkbox_cubit.dart';
@@ -37,7 +38,11 @@ class _FilteringDialogWidgetState extends State<FilteringDialogWidget> {
       ),
       content: BlocConsumer<TagListBloc, TagListState>(
         bloc: tagListBloc,
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is ErrorTagListState) {
+            showCustomSnackBar(context, state.message);
+          }
+        },
         builder: (context, state) {
           if (state is LoadingTagListState) {
             return const Center(

@@ -1,13 +1,6 @@
-import 'dart:convert';
-
 import 'package:megalab_news_app/feature/news_feed/domain/entities/post_entity.dart';
 
-List<PostModel> postListModelFromJson(String str) =>
-    List<PostModel>.from(json.decode(str).map((x) => PostModel.fromJson(x)));
-
-String postListModelToJson(List<PostModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
+// ignore: must_be_immutable
 class PostModel extends PostEntity {
   PostModel({
     required id,

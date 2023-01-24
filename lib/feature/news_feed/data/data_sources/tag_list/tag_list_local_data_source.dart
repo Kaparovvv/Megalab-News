@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
-
 import 'package:megalab_news_app/core/error/exception.dart';
 import 'package:megalab_news_app/feature/news_feed/data/models/tag_list_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:megalab_news_app/commons/icon_helper.dart';
-import 'package:megalab_news_app/commons/theme_helper.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_button_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_textfield_widget.dart';
 
@@ -36,6 +35,8 @@ class _PopUpSearchFieldState extends State<PopUpSearchField> {
               constraints: BoxConstraints(
                 maxHeight: 38.h,
                 maxWidth: 205.w,
+                minHeight: 38.h,
+                minWidth: 205.w,
               ),
               hinText: 'Поиск',
               controller: widget.controller,

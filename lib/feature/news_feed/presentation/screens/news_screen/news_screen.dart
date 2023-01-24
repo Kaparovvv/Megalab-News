@@ -7,6 +7,7 @@ import 'package:megalab_news_app/commons/textStyle_helper.dart';
 import 'package:megalab_news_app/core/global_widgets/bottom_panel_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/btn_try_again_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_button_widget.dart';
+import 'package:megalab_news_app/core/global_widgets/custom_snackbar.dart';
 import 'package:megalab_news_app/core/global_widgets/custom_textfield_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/loading_indicator_widget.dart';
 import 'package:megalab_news_app/core/global_widgets/loading_overlay_widget.dart';
@@ -20,7 +21,14 @@ import 'package:megalab_news_app/feature/news_feed/presentation/screens/news_scr
 
 class NewsScreen extends StatefulWidget {
   final int postId;
-  const NewsScreen({super.key, required this.postId});
+  final bool isDeleteButton;
+  final void Function()? deletePost;
+  const NewsScreen({
+    super.key,
+    required this.postId,
+    this.isDeleteButton = false,
+    this.deletePost,
+  });
 
   @override
   State<NewsScreen> createState() => _NewsScreenState();
@@ -49,7 +57,11 @@ class _NewsScreenState extends State<NewsScreen> {
         child: Stack(
           children: [
             BlocConsumer<PostDetailBloc, PostDetailState>(
-              listener: (context, state) {},
+              listener: (context, state) {
+                if (state is ErrorPostDetailState) {
+                  showCustomSnackBar(context, state.message);
+                }
+              },
               builder: (context, state) {
                 if (state is ErrorPostDetailState) {
                   return ButtonTryAgainWidget(
@@ -90,6 +102,8 @@ class _NewsScreenState extends State<NewsScreen> {
                                 NewsPublicationWidget(
                                   postData: postDetail,
                                   isExtended: true,
+                                  isDeleteButton: widget.isDeleteButton,
+                                  deletePost: () => widget.deletePost!(),
                                 ),
                                 SizedBox(height: 35.h),
                                 Text('Комментарии',
@@ -131,7 +145,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                 CustomTextFieldWidget(
                                   constraints: BoxConstraints(
                                     maxHeight: 38.h,
-                                    maxWidth: 230.w,
+                                    maxWidth: 250.w,
                                   ),
                                   hinText: 'Напишите комментарий',
                                   controller: commentController,
@@ -139,6 +153,14 @@ class _NewsScreenState extends State<NewsScreen> {
                                 BlocConsumer<CommentBloc, CommentState>(
                                   bloc: _commentBloc,
                                   listener: (context, state) {
+                                    if (state is ErrorCommentToCommentState) {
+                                      showCustomSnackBar(
+                                          context, state.message);
+                                    }
+                                    if (state is ErrorCommentToPostState) {
+                                      showCustomSnackBar(
+                                          context, state.message);
+                                    }
                                     if (state is LoadedCommentToPostState) {
                                       _postDetailBloc.add(
                                         GetPostDetailEvent(
@@ -160,8 +182,8 @@ class _NewsScreenState extends State<NewsScreen> {
                                           text: commentController.text,
                                         ),
                                       ),
-                                      width: 37,
-                                      height: 38,
+                                      width: 60.w,
+                                      height: 38.h,
                                       isChildText: false,
                                       iconUrl: IconHelper.arrowUp,
                                     );

@@ -1,5 +1,6 @@
 import 'package:megalab_news_app/feature/news_feed/domain/entities/tag_list_entity.dart';
 
+// ignore: must_be_immutable
 class TagListModel extends TagListEntity {
   TagListModel({
     required id,

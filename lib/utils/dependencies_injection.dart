@@ -1,3 +1,6 @@
+import 'package:megalab_news_app/feature/profile/data/data_sources/put_user_data/put_user_data_remote_source.dart';
+import 'package:megalab_news_app/feature/profile/data/repositories/user_data/put_user_data_repos_ext.dart';
+import 'package:megalab_news_app/feature/profile/domain/repositories/user_data/put_user_data_repos.dart';
 import 'package:megalab_news_app/utils/dependencies_export.dart';
 
 final getIt = GetIt.instance;
@@ -5,7 +8,7 @@ final getIt = GetIt.instance;
 Future<void> init() async {
   ///Blocs
 
-  //UserData
+  //RegisterBloc
   getIt.registerFactory<RegisterBloc>(
     () => RegisterBloc(registerUser: getIt.get<RegisterUser>()),
   );
@@ -60,6 +63,35 @@ Future<void> init() async {
     ),
   );
 
+  //UserDataBloc
+  getIt.registerFactory(
+    () => UserDataBloc(
+      getUserData: getIt.get<GetUserData>(),
+      putUserData: getIt.get<PutUserData>(),
+    ),
+  );
+
+  //LogoutBloc
+  getIt.registerFactory(
+    () => LogoutBloc(
+      logout: getIt.get<UserLogout>(),
+    ),
+  );
+
+  //CreatePostBloc
+  getIt.registerFactory(
+    () => CreatePostBloc(
+      createPost: getIt.get<CreatePost>(),
+    ),
+  );
+
+  //DeletePostBloc
+  getIt.registerFactory(
+    () => DeletePostBloc(
+      deletePost: getIt.get<DeletePost>(),
+    ),
+  );
+
   ///UseCases
 
   //UserData
@@ -106,6 +138,33 @@ Future<void> init() async {
   //TagList
   getIt.registerFactory(
     () => TagList(getIt()),
+  );
+
+  //GetUserData
+  getIt.registerFactory(
+    () => GetUserData(getIt()),
+  );
+
+//PutUserData
+  getIt.registerFactory(
+    () => PutUserData(
+      getIt(),
+    ),
+  );
+
+  //UserLogout
+  getIt.registerFactory(
+    () => UserLogout(getIt()),
+  );
+
+  //CreatePost
+  getIt.registerFactory(
+    () => CreatePost(getIt()),
+  );
+
+  //DeletePost
+  getIt.registerFactory(
+    () => DeletePost(getIt()),
   );
 
   ///Repository
@@ -160,9 +219,39 @@ Future<void> init() async {
         networkInfo: getIt(),
       ));
 
+  //UserData
+  getIt.registerLazySingleton<UserDataRepository>(() => UserDataRepositoryExt(
+        localDataSource: getIt(),
+        remoteDataSource: getIt(),
+        networkInfo: getIt(),
+      ));
+
+  //PutUserdata
+  getIt.registerLazySingleton<PutUserDataRepository>(() => PutUserDataReposExt(
+        remoteDataSource: getIt(),
+      ));
+
+  //UserLogout
+  getIt.registerLazySingleton<UserLogoutRepository>(() => UserLogoutReposExt(
+        remoteSource: getIt(),
+        networkInfo: getIt(),
+      ));
+
+  //CreatePost
+  getIt.registerLazySingleton<CreatePostRepository>(() => CreatePostReposExt(
+        remoteDataSource: getIt(),
+        networkInfo: getIt(),
+      ));
+
+  //DeletePost
+  getIt.registerLazySingleton<DeletePostRepository>(() => DeletePostReposExt(
+        remoteSource: getIt(),
+        networkInfo: getIt(),
+      ));
+
   ///Data_Source
 
-  //UserData
+  //RegisterUser
   getIt.registerLazySingleton<UserRemoteDataSource>(
     () => UserRemoteDataSourceImpl(),
   );
@@ -216,6 +305,33 @@ Future<void> init() async {
   );
   getIt.registerLazySingleton<TagListLocalDataSource>(
     () => TagListLocalDataSourceImpl(sharedPreferences: getIt()),
+  );
+
+  //UserData
+  getIt.registerLazySingleton<UserDataRemoteSource>(
+    () => UserDataRemoteSourceImpl(),
+  );
+  getIt.registerLazySingleton<UserDataLocalSource>(
+    () => UserDataLocalSourceImpl(sharedPreferences: getIt()),
+  );
+
+  //PutUserData
+  getIt.registerLazySingleton<PutUserDataRemoteSource>(
+      () => PutUserDataRemoteSourceImpl());
+
+  //UserLogout
+  getIt.registerLazySingleton<UserLogoutRemoteSource>(
+    () => UserLogoutRemoteSourceImpl(),
+  );
+
+  //CreatePost
+  getIt.registerLazySingleton<CreatePostRemoteSource>(
+    () => CreatePostRemoteSourceImpl(),
+  );
+
+  //DeletePost
+  getIt.registerLazySingleton<DeletePostRemoteSource>(
+    () => DeletePostRemoteSourceImpl(),
   );
 
   ///Core

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:megalab_news_app/api/api_requester/api_requester.dart';
 import 'package:megalab_news_app/core/error/exception.dart';

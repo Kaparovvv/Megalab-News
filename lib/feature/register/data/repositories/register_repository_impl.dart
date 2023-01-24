@@ -3,7 +3,7 @@ import 'package:megalab_news_app/core/error/exception.dart';
 import 'package:megalab_news_app/core/platform/network_info.dart';
 import 'package:megalab_news_app/feature/register/data/data_sources/user_local_data_source.dart';
 import 'package:megalab_news_app/feature/register/data/data_sources/user_remote_data_source.dart';
-import 'package:megalab_news_app/feature/register/data/models/user_data_model.dart';
+import 'package:megalab_news_app/feature/register/data/models/register_model.dart';
 import 'package:megalab_news_app/feature/register/domain/entities/user_entities.dart';
 import 'package:megalab_news_app/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
@@ -21,11 +21,10 @@ class RegisterRepositoryImpl implements RegisterRepository {
   });
 
   @override
-  Future<Either<Failure, UserEntity>> registerUser(
+  Future<Either<Failure, RegisterEntity>> registerUser(
     String nickname,
     String name,
     String lastName,
-    // String profileImage,
     String password,
     String password2,
   ) async {
@@ -34,15 +33,14 @@ class RegisterRepositoryImpl implements RegisterRepository {
         nickname,
         name,
         lastName,
-        // profileImage,
         password,
         password2,
       ),
     );
   }
 
-  Future<Either<Failure, UserEntity>> _registerUser(
-    Future<UserDataModel> Function() register,
+  Future<Either<Failure, RegisterEntity>> _registerUser(
+    Future<RegisterModel> Function() register,
   ) async {
     if (await networkInfo.isConnected == ConnectivityResult.mobile ||
         await networkInfo.isConnected == ConnectivityResult.wifi) {
