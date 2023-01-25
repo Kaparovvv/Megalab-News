@@ -75,7 +75,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       title: 'Пароль',
                       controller: passwordController,
                       validate: (value) =>
-                          validatesHelper.passwordValidate(value!),
+                          validatesHelper.titleValidate(value!, 'пароль'),
                     ),
                     SizedBox(height: 36.h),
                     BlocConsumer<AuthBloc, AuthState>(
@@ -96,8 +96,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         return CustomButtonWidget(
                           txtButton: 'Войти',
                           onPressed: () {
-                            if (nicknameController.text.isNotEmpty &&
-                                passwordController.text.isNotEmpty) {
+                            if (_formkey.currentState!.validate()) {
                               _authBloc.add(
                                 AuthUserEvent(
                                   nickname: nicknameController.text,
