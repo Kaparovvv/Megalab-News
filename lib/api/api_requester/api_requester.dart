@@ -2,15 +2,15 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:megalab_news_app/api/error/catch_exception.dart';
+import 'package:megalab_news_app/commons/names_helper.dart';
 import 'package:megalab_news_app/utils/dependencies_injection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiRequester {
   static const String url = 'https://megalab.pythonanywhere.com/';
-  static const CACHER_USER_TOKEN = 'CACHER_USER_TOKEN';
 
   Future<Dio> initDio({bool? isToken}) async {
-    log('User Token =========== ${getIt.get<SharedPreferences>().getString(CACHER_USER_TOKEN)}');
+    log('User Token =========== ${getIt.get<SharedPreferences>().getString(NamesHelper.cacheUserToken)}');
     return Dio(
       BaseOptions(
         baseUrl: url,
@@ -19,7 +19,7 @@ class ApiRequester {
         headers: isToken ?? false
             ? {
                 "Authorization":
-                    'Token ${getIt.get<SharedPreferences>().getString(CACHER_USER_TOKEN)}'
+                    'Token ${getIt.get<SharedPreferences>().getString(NamesHelper.cacheUserToken)}'
               }
             : {},
         connectTimeout: 30000,

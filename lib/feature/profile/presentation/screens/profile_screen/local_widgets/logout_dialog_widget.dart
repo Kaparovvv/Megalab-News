@@ -5,10 +5,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:megalab_news_app/commons/textStyle_helper.dart';
 import 'package:megalab_news_app/core/global_widgets/loading_overlay_widget.dart';
 import 'package:megalab_news_app/core/router/app_router.gr.dart';
-import 'package:megalab_news_app/feature/profile/presentation/blocs/logout_bloc/logout_bloc.dart';
+import 'package:megalab_news_app/utils/dependencies_injection.dart';
 
+import '../../../../../../commons/names_helper.dart';
 import '../../../../../../core/global_widgets/custom_button_widget.dart';
 import '../../../../../../core/global_widgets/custom_snackbar.dart';
+import '../../../../../../utils/dependencies_export.dart';
 
 class LogoutDialogWidget extends StatelessWidget {
   const LogoutDialogWidget({super.key});
@@ -26,6 +28,7 @@ class LogoutDialogWidget extends StatelessWidget {
             }
             if (state is LoadedLogoutState) {
               context.router.replaceAll([const SplashScreenRoute()]);
+              getIt.get<SharedPreferences>().remove(NamesHelper.cacheUserToken);
             }
           },
           builder: (context, state) {
@@ -50,7 +53,7 @@ class LogoutDialogWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       CustomButtonWidget(
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () => context.router.pop(),
                         width: 100,
                         txtButton: 'Нет',
                       ),

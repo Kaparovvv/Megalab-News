@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -143,9 +144,9 @@ class _FilteringDialogWidgetState extends State<FilteringDialogWidget> {
                                 tags: widget.listOfTag.join(","),
                               ),
                             );
-                        Navigator.pop(context);
+                        context.router.pop();
                       } else {
-                        Navigator.pop(context);
+                        context.router.pop();
                       }
                     },
                     width: 168.w,

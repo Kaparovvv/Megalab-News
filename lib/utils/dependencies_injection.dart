@@ -10,85 +10,85 @@ Future<void> init() async {
 
   //RegisterBloc
   getIt.registerFactory<RegisterBloc>(
-    () => RegisterBloc(registerUser: getIt.get<RegisterUser>()),
+    () => RegisterBloc(registerUser: getIt()),
   );
 
   //UserToken
   getIt.registerFactory<AuthBloc>(
-    () => AuthBloc(authUser: getIt.get<AuthUser>()),
+    () => AuthBloc(authUser: getIt()),
   );
 
   //PostsList
   getIt.registerFactory(
     () => PostBloc(
-      postList: getIt.get<PostList>(),
-      postDetail: getIt.get<PostDetail>(),
+      postList: getIt(),
+      postDetail: getIt(),
     ),
   );
 
   //PostDetailBloc
   getIt.registerFactory(
     () => PostDetailBloc(
-      postDetail: getIt.get<PostDetail>(),
+      postDetail: getIt(),
     ),
   );
 
   //CommentBloc
   getIt.registerFactory(
     () => CommentBloc(
-      commentToComment: getIt.get<CommentToComment>(),
-      commentToPost: getIt.get<CommentToPost>(),
+      commentToComment: getIt(),
+      commentToPost: getIt(),
     ),
   );
 
   //FavoritesBloc
   getIt.registerFactory(
     () => FavoritesBloc(
-      postToFavorites: getIt.get<PostToFavorites>(),
-      deleteFromFavorites: getIt.get<DeleteFromFavorites>(),
+      postToFavorites: getIt(),
+      deleteFromFavorites: getIt(),
     ),
   );
 
   //FavoritesListBloc
   getIt.registerFactory(
     () => FavoriteListBloc(
-      postsFromFavorites: getIt.get<PostsFromFavorites>(),
+      postsFromFavorites: getIt(),
     ),
   );
 
   //TagListBloc
   getIt.registerFactory(
     () => TagListBloc(
-      tagList: getIt.get<TagList>(),
+      tagList: getIt(),
     ),
   );
 
   //UserDataBloc
   getIt.registerFactory(
     () => UserDataBloc(
-      getUserData: getIt.get<GetUserData>(),
-      putUserData: getIt.get<PutUserData>(),
+      getUserData: getIt(),
+      putUserData: getIt(),
     ),
   );
 
   //LogoutBloc
   getIt.registerFactory(
     () => LogoutBloc(
-      logout: getIt.get<UserLogout>(),
+      logout: getIt(),
     ),
   );
 
   //CreatePostBloc
   getIt.registerFactory(
     () => CreatePostBloc(
-      createPost: getIt.get<CreatePost>(),
+      createPost: getIt(),
     ),
   );
 
   //DeletePostBloc
   getIt.registerFactory(
     () => DeletePostBloc(
-      deletePost: getIt.get<DeletePost>(),
+      deletePost: getIt(),
     ),
   );
 
@@ -170,81 +170,80 @@ Future<void> init() async {
   ///Repository
 
   //UserData
-  getIt.registerLazySingleton<RegisterRepository>(() => RegisterRepositoryImpl(
+  getIt.registerFactory<RegisterRepository>(() => RegisterRepositoryImpl(
         remoteDataSource: getIt(),
         localDataSource: getIt(),
         networkInfo: getIt(),
       ));
 
   //UserToken
-  getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
+  getIt.registerFactory<AuthRepository>(() => AuthRepositoryImpl(
         remoteDataSource: getIt(),
         localDataSource: getIt(),
         networkInfo: getIt(),
       ));
 
   //PostsList
-  getIt.registerLazySingleton<PostListRepository>(() => PostListRepositoryImpl(
+  getIt.registerFactory<PostListRepository>(() => PostListRepositoryImpl(
         localDataSource: getIt(),
         remoteDataSource: getIt(),
         networkInfo: getIt(),
       ));
 
   //PostDetail
-  getIt.registerLazySingleton<PostDetailRepository>(
-      () => PostDetailRepositoryImpl(
-            localDataSource: getIt(),
-            remoteDataSource: getIt(),
-            networkInfo: getIt(),
-          ));
+  getIt.registerFactory<PostDetailRepository>(() => PostDetailRepositoryImpl(
+        localDataSource: getIt(),
+        remoteDataSource: getIt(),
+        networkInfo: getIt(),
+      ));
 
   //Comment
-  getIt.registerLazySingleton<CommentRepository>(() => CommentRepositoryExt(
+  getIt.registerFactory<CommentRepository>(() => CommentRepositoryExt(
         localDataSource: getIt(),
         remoteDataSource: getIt(),
         networkInfo: getIt(),
       ));
 
   //Favorites
-  getIt.registerLazySingleton<FavoritesRepository>(() => FavoritesRepositoryExt(
+  getIt.registerFactory<FavoritesRepository>(() => FavoritesRepositoryExt(
         localDataSource: getIt(),
         remoteDataSource: getIt(),
         networkInfo: getIt(),
       ));
 
   //TagList
-  getIt.registerLazySingleton<TagListRepository>(() => TagListRepositoryExt(
+  getIt.registerFactory<TagListRepository>(() => TagListRepositoryExt(
         localDataSource: getIt(),
         remoteDataSource: getIt(),
         networkInfo: getIt(),
       ));
 
   //UserData
-  getIt.registerLazySingleton<UserDataRepository>(() => UserDataRepositoryExt(
+  getIt.registerFactory<UserDataRepository>(() => UserDataRepositoryExt(
         localDataSource: getIt(),
         remoteDataSource: getIt(),
         networkInfo: getIt(),
       ));
 
   //PutUserdata
-  getIt.registerLazySingleton<PutUserDataRepository>(() => PutUserDataReposExt(
+  getIt.registerFactory<PutUserDataRepository>(() => PutUserDataReposExt(
         remoteDataSource: getIt(),
       ));
 
   //UserLogout
-  getIt.registerLazySingleton<UserLogoutRepository>(() => UserLogoutReposExt(
+  getIt.registerFactory<UserLogoutRepository>(() => UserLogoutReposExt(
         remoteSource: getIt(),
         networkInfo: getIt(),
       ));
 
   //CreatePost
-  getIt.registerLazySingleton<CreatePostRepository>(() => CreatePostReposExt(
+  getIt.registerFactory<CreatePostRepository>(() => CreatePostReposExt(
         remoteDataSource: getIt(),
         networkInfo: getIt(),
       ));
 
   //DeletePost
-  getIt.registerLazySingleton<DeletePostRepository>(() => DeletePostReposExt(
+  getIt.registerFactory<DeletePostRepository>(() => DeletePostReposExt(
         remoteSource: getIt(),
         networkInfo: getIt(),
       ));
@@ -252,98 +251,98 @@ Future<void> init() async {
   ///Data_Source
 
   //RegisterUser
-  getIt.registerLazySingleton<UserRemoteDataSource>(
+  getIt.registerFactory<UserRemoteDataSource>(
     () => UserRemoteDataSourceImpl(),
   );
-  getIt.registerLazySingleton<UserLocalDataSource>(
+  getIt.registerFactory<UserLocalDataSource>(
     () => UserLocalDataSourceImpl(sharedPreferences: getIt()),
   );
 
   //UserToken
-  getIt.registerLazySingleton<UserTokenRemoteDataSource>(
+  getIt.registerFactory<UserTokenRemoteDataSource>(
     () => UserTokenRemoteDataSourceImpl(),
   );
-  getIt.registerLazySingleton<UserTokenLocalDataSource>(
+  getIt.registerFactory<UserTokenLocalDataSource>(
     () => UserTokenLocalDataSourceImpl(sharedPreferences: getIt()),
   );
 
   //PostsList
-  getIt.registerLazySingleton<PostListRemoteDataSource>(
+  getIt.registerFactory<PostListRemoteDataSource>(
     () => PostListRemoteDataSourceImpl(),
   );
-  getIt.registerLazySingleton<PostListLocalDataSource>(
+  getIt.registerFactory<PostListLocalDataSource>(
     () => PostListLocalDataSourceImpl(sharedPreferences: getIt()),
   );
 
   //PostDetail
-  getIt.registerLazySingleton<PostDetailRemoteDataSource>(
+  getIt.registerFactory<PostDetailRemoteDataSource>(
     () => PostDetailRemoteDataSourceImpl(),
   );
-  getIt.registerLazySingleton<PostDetailLocalDataSource>(
+  getIt.registerFactory<PostDetailLocalDataSource>(
     () => PostDetailLocalDataSourceImpl(sharedPreferences: getIt()),
   );
 
   // CommentData
-  getIt.registerLazySingleton<CommentRemoteDataSource>(
+  getIt.registerFactory<CommentRemoteDataSource>(
     () => CommentRemoteDataSourceImpl(),
   );
-  getIt.registerLazySingleton<CommentLocalDataSource>(
+  getIt.registerFactory<CommentLocalDataSource>(
     () => CommentLocalDataSourceImpl(sharedPreferences: getIt()),
   );
 
   //Favorites
-  getIt.registerLazySingleton<FavoritesRemoteDataSource>(
+  getIt.registerFactory<FavoritesRemoteDataSource>(
     () => FavoritesRemoteDataSourceImpl(),
   );
-  getIt.registerLazySingleton<FavoritesLocalDataSource>(
+  getIt.registerFactory<FavoritesLocalDataSource>(
     () => FavoritesLocalDataSourceImpl(sharedPreferences: getIt()),
   );
 
   //TagList
-  getIt.registerLazySingleton<TagListRemoteDataSource>(
+  getIt.registerFactory<TagListRemoteDataSource>(
     () => TagListRemoteDataSourceImpl(),
   );
-  getIt.registerLazySingleton<TagListLocalDataSource>(
+  getIt.registerFactory<TagListLocalDataSource>(
     () => TagListLocalDataSourceImpl(sharedPreferences: getIt()),
   );
 
   //UserData
-  getIt.registerLazySingleton<UserDataRemoteSource>(
+  getIt.registerFactory<UserDataRemoteSource>(
     () => UserDataRemoteSourceImpl(),
   );
-  getIt.registerLazySingleton<UserDataLocalSource>(
+  getIt.registerFactory<UserDataLocalSource>(
     () => UserDataLocalSourceImpl(sharedPreferences: getIt()),
   );
 
   //PutUserData
-  getIt.registerLazySingleton<PutUserDataRemoteSource>(
+  getIt.registerFactory<PutUserDataRemoteSource>(
       () => PutUserDataRemoteSourceImpl());
 
   //UserLogout
-  getIt.registerLazySingleton<UserLogoutRemoteSource>(
+  getIt.registerFactory<UserLogoutRemoteSource>(
     () => UserLogoutRemoteSourceImpl(),
   );
 
   //CreatePost
-  getIt.registerLazySingleton<CreatePostRemoteSource>(
+  getIt.registerFactory<CreatePostRemoteSource>(
     () => CreatePostRemoteSourceImpl(),
   );
 
   //DeletePost
-  getIt.registerLazySingleton<DeletePostRemoteSource>(
+  getIt.registerFactory<DeletePostRemoteSource>(
     () => DeletePostRemoteSourceImpl(),
   );
 
   ///Core
-  getIt.registerLazySingleton<NetworkInfo>(
+  getIt.registerFactory<NetworkInfo>(
     () => NetworkInfoImpl(),
   );
 
   ///External
   final sharedPreferences = await SharedPreferences.getInstance();
   getIt.registerLazySingleton(() => sharedPreferences);
-  getIt.registerLazySingleton(() => Connectivity());
+  getIt.registerFactory(() => Connectivity());
 
 //FailureToMessage
-  getIt.registerLazySingleton<FailureToMessage>(() => FailureToMessage());
+  getIt.registerFactory<FailureToMessage>(() => FailureToMessage());
 }

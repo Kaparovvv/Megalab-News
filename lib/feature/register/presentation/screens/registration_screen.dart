@@ -23,11 +23,11 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  TextEditingController nicknameController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController password2Controller = TextEditingController();
+  late TextEditingController _nicknameController;
+  late TextEditingController _nameController;
+  late TextEditingController _lastNameController;
+  late TextEditingController _passwordController;
+  late TextEditingController _password2Controller;
 
   late RegisterBloc _registerBloc;
 
@@ -37,6 +37,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   void initState() {
     _registerBloc = BlocProvider.of(context, listen: false);
+    _nicknameController = TextEditingController();
+    _nameController = TextEditingController();
+    _lastNameController = TextEditingController();
+    _passwordController = TextEditingController();
+    _password2Controller = TextEditingController();
     super.initState();
   }
 
@@ -65,39 +70,39 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                     SizedBox(height: 31.h),
                     TextFieldWithTextWidget(
-                      controller: lastNameController,
+                      controller: _lastNameController,
                       title: 'Фамилия',
                       validate: (value) =>
                           validatesHelper.titleValidate(value!, 'фамилию'),
                     ),
                     SizedBox(height: 16.h),
                     TextFieldWithTextWidget(
-                      controller: nameController,
+                      controller: _nameController,
                       title: 'Имя',
                       validate: (value) =>
                           validatesHelper.titleValidate(value!, 'имя'),
                     ),
                     SizedBox(height: 16.h),
                     TextFieldWithTextWidget(
-                      controller: nicknameController,
+                      controller: _nicknameController,
                       title: 'Никнейм',
                       validate: (value) =>
                           validatesHelper.titleValidate(value!, 'никнейм'),
                     ),
                     SizedBox(height: 16.h),
                     PasswordTextFieldWidget(
-                      controller: passwordController,
+                      controller: _passwordController,
                       title: 'Пароль',
                       validate: (value) =>
                           validatesHelper.passwordValidate(value!),
                     ),
                     SizedBox(height: 16.h),
                     PasswordTextFieldWidget(
-                        controller: password2Controller,
+                        controller: _password2Controller,
                         title: 'Пароль',
                         validate: (value) {
-                          if (passwordController.text !=
-                              password2Controller.text) {
+                          if (_passwordController.text !=
+                              _password2Controller.text) {
                             return 'Пароли не совпадают';
                           }
                           return null;
@@ -111,11 +116,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         }
                         if (state is LoadedRegisterState) {
                           context.router.push(const AuthScreenRoute());
-                          nicknameController.clear();
-                          nameController.clear();
-                          lastNameController.clear();
-                          passwordController.clear();
-                          password2Controller.clear();
+                          _nicknameController.dispose();
+                          _nameController.dispose();
+                          _lastNameController.dispose();
+                          _passwordController.dispose();
+                          _password2Controller.dispose();
                         }
                       },
                       builder: (context, state) {
@@ -129,11 +134,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             if (_formkey.currentState!.validate()) {
                               _registerBloc.add(
                                 UserRegisterEvent(
-                                  nickname: nicknameController.text,
-                                  name: nameController.text,
-                                  lastName: lastNameController.text,
-                                  password: passwordController.text,
-                                  password2: password2Controller.text,
+                                  nickname: _nicknameController.text,
+                                  name: _nameController.text,
+                                  lastName: _lastNameController.text,
+                                  password: _passwordController.text,
+                                  password2: _password2Controller.text,
                                 ),
                               );
                             }

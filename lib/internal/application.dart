@@ -20,60 +20,60 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider(
             create: (_) => RegisterBloc(
-              registerUser: getIt.get<RegisterUser>(),
+              registerUser: getIt(),
             ),
           ),
           BlocProvider(
             create: (_) => AuthBloc(
-              authUser: getIt.get<AuthUser>(),
+              authUser: getIt(),
             ),
           ),
           BlocProvider(
             create: (_) => PostBloc(
-              postList: getIt.get<PostList>(),
-              postDetail: getIt.get<PostDetail>(),
+              postList: getIt(),
+              postDetail: getIt(),
             ),
           ),
           BlocProvider(
             create: (_) => PostDetailBloc(
-              postDetail: getIt.get<PostDetail>(),
+              postDetail: getIt(),
             ),
           ),
           BlocProvider(
             create: (_) => CommentBloc(
-              commentToComment: getIt.get<CommentToComment>(),
-              commentToPost: getIt.get<CommentToPost>(),
+              commentToComment: getIt(),
+              commentToPost: getIt(),
             ),
           ),
           BlocProvider(
             create: (_) => FavoriteListBloc(
-              postsFromFavorites: getIt.get<PostsFromFavorites>(),
+              postsFromFavorites: getIt(),
             ),
           ),
           BlocProvider(
             create: (_) => TagListBloc(
-              tagList: getIt.get<TagList>(),
+              tagList: getIt(),
             ),
           ),
           BlocProvider(
             create: (_) => UserDataBloc(
-              getUserData: getIt.get<GetUserData>(),
-              putUserData: getIt.get<PutUserData>(),
+              getUserData: getIt(),
+              putUserData: getIt(),
             ),
           ),
           BlocProvider(
             create: (_) => LogoutBloc(
-              logout: getIt.get<UserLogout>(),
+              logout: getIt(),
             ),
           ),
           BlocProvider(
             create: (_) => CreatePostBloc(
-              createPost: getIt.get<CreatePost>(),
+              createPost: getIt(),
             ),
           ),
           BlocProvider(
             create: (_) => DeletePostBloc(
-              deletePost: getIt.get<DeletePost>(),
+              deletePost: getIt(),
             ),
           ),
           BlocProvider(

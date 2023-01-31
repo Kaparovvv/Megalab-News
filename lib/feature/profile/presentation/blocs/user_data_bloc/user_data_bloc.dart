@@ -23,7 +23,7 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
 
       result.fold(
         (failure) => emit(
-          ErrorGetUserDataState(
+          ErrorUserDataState(
             message: getIt.get<FailureToMessage>().mapFailureToMessage(failure),
           ),
         ),
@@ -46,7 +46,7 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
 
       result.fold(
         (failure) => emit(
-          ErrorPutUserDataState(
+          ErrorUserDataState(
             message: getIt.get<FailureToMessage>().mapFailureToMessage(failure),
           ),
         ),

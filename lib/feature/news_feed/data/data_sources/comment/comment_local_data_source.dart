@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:megalab_news_app/commons/names_helper.dart';
 import 'package:megalab_news_app/core/error/exception.dart';
 import 'package:megalab_news_app/feature/news_feed/data/models/comment_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,8 +10,6 @@ abstract class CommentLocalDataSource {
   Future<void> commentDataToCache(CommentModel commentModel);
 }
 
-const CACHED_COMMENT_DATA = 'CACHED_COMMENT_DATA ';
-
 class CommentLocalDataSourceImpl implements CommentLocalDataSource {
   final SharedPreferences sharedPreferences;
 
@@ -18,7 +17,8 @@ class CommentLocalDataSourceImpl implements CommentLocalDataSource {
 
   @override
   Future<CommentModel> getCommentDataFromCache() {
-    final jsonComment = sharedPreferences.getString(CACHED_COMMENT_DATA);
+    final jsonComment =
+        sharedPreferences.getString(NamesHelper.cachedCommentData);
     if (jsonComment!.isNotEmpty) {
       return Future.value(
         CommentModel.fromJson(
@@ -33,7 +33,7 @@ class CommentLocalDataSourceImpl implements CommentLocalDataSource {
   @override
   Future<void> commentDataToCache(CommentModel commentModel) {
     return sharedPreferences.setString(
-      CACHED_COMMENT_DATA,
+      NamesHelper.cachedCommentData,
       json.encode(
         commentModel.toJson(),
       ),
