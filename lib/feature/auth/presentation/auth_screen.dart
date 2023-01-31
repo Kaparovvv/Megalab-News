@@ -21,8 +21,8 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  TextEditingController nicknameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  late TextEditingController nicknameController;
+  late TextEditingController passwordController;
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   ValidatesHelper validatesHelper = ValidatesHelper();
@@ -31,6 +31,8 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   void initState() {
     _authBloc = BlocProvider.of(context, listen: false);
+    nicknameController = TextEditingController();
+    passwordController = TextEditingController();
     super.initState();
   }
 
@@ -83,6 +85,8 @@ class _AuthScreenState extends State<AuthScreen> {
                       listener: (context, state) {
                         if (state is LoadedAuthState) {
                           context.router.replace(const NewsListScreenRoute());
+                          nicknameController.dispose();
+                          passwordController.dispose();
                         }
 
                         if (state is ErrorAuthState) {

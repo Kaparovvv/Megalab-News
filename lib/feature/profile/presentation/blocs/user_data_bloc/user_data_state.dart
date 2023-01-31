@@ -17,10 +17,10 @@ class LoadedGetUserDataState extends UserDataState {
   const LoadedGetUserDataState({required this.userDataEntity});
 }
 
-class ErrorGetUserDataState extends UserDataState {
+class ErrorUserDataState extends UserDataState {
   final String message;
 
-  const ErrorGetUserDataState({required this.message});
+  const ErrorUserDataState({required this.message});
 }
 
 class LoadingPutUserDataState extends UserDataState {}
@@ -29,10 +29,4 @@ class LoadedPutUserDataState extends UserDataState {
   final UserDataEntity userDataEntity;
 
   const LoadedPutUserDataState({required this.userDataEntity});
-}
-
-class ErrorPutUserDataState extends UserDataState {
-  final String message;
-
-  const ErrorPutUserDataState({required this.message});
 }

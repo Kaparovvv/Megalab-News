@@ -27,7 +27,7 @@ class NewsListScreen extends StatefulWidget {
 }
 
 class _NewsListScreenState extends State<NewsListScreen> {
-  TextEditingController searchController = TextEditingController();
+  late TextEditingController _searchController;
   ScrollController? _scrollController;
   late PostBloc _postBloc;
   late TagListBloc _tagListBloc;
@@ -41,6 +41,7 @@ class _NewsListScreenState extends State<NewsListScreen> {
     _postBloc.add(GetPostListEvent());
     _tagListBloc.add(GetTagListEvent());
     _scrollController = ScrollController();
+    _searchController = TextEditingController();
     super.initState();
   }
 
@@ -58,7 +59,7 @@ class _NewsListScreenState extends State<NewsListScreen> {
                 }
                 if (state is LoadedPostListState) {
                   listOfTag.clear();
-                  searchController.clear();
+                  _searchController.clear();
                 }
               },
               builder: (context, state) {
@@ -77,12 +78,12 @@ class _NewsListScreenState extends State<NewsListScreen> {
                           onSearch: () => showDialog(
                             context: context,
                             builder: (context) => PopUpSearchField(
-                              controller: searchController,
+                              controller: _searchController,
                               onPressed: () {
-                                if (searchController.text.isNotEmpty) {
+                                if (_searchController.text.isNotEmpty) {
                                   _postBloc.add(
                                     GetPostListByQueryEvent(
-                                      query: searchController.text,
+                                      query: _searchController.text,
                                     ),
                                   );
                                 }

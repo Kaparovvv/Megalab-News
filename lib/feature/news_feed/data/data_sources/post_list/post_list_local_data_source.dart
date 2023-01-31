@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:megalab_news_app/commons/names_helper.dart';
 import 'package:megalab_news_app/core/error/exception.dart';
 import 'package:megalab_news_app/feature/news_feed/data/models/post_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,8 +10,6 @@ abstract class PostListLocalDataSource {
   Future<void> postListDataToCache(List<PostModel> postListModel);
 }
 
-const CACHED_POST_LIST = 'CACHED_POST_LIST';
-
 class PostListLocalDataSourceImpl implements PostListLocalDataSource {
   final SharedPreferences sharedPreferences;
 
@@ -18,7 +17,8 @@ class PostListLocalDataSourceImpl implements PostListLocalDataSource {
 
   @override
   Future<List<PostModel>> getPostListDataFromCache() {
-    final jsonPostList = sharedPreferences.getStringList(CACHED_POST_LIST);
+    final jsonPostList =
+        sharedPreferences.getStringList(NamesHelper.cachedPostList);
     if (jsonPostList!.isNotEmpty) {
       return Future.value(
         jsonPostList
@@ -35,7 +35,7 @@ class PostListLocalDataSourceImpl implements PostListLocalDataSource {
     final List<String> postList =
         postListModel.map((post) => json.encode(post.toJson())).toList();
 
-    sharedPreferences.setStringList(CACHED_POST_LIST, postList);
+    sharedPreferences.setStringList(NamesHelper.cachedPostList, postList);
     // ignore: void_checks
     return Future.value(postList);
   }

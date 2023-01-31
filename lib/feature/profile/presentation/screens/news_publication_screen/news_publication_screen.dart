@@ -27,9 +27,9 @@ class NewsPublicationScreen extends StatefulWidget {
 class _NewsPublicationScreenState extends State<NewsPublicationScreen> {
   File? _imagePost;
   String? _tag;
-  TextEditingController titleController = TextEditingController();
-  TextEditingController textController = TextEditingController();
-  TextEditingController shortDescController = TextEditingController();
+  late TextEditingController _titleController;
+  late TextEditingController _textController;
+  late TextEditingController _shortDescController;
 
   late CreatePostBloc _createPostBloc;
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -38,6 +38,9 @@ class _NewsPublicationScreenState extends State<NewsPublicationScreen> {
   @override
   void initState() {
     _createPostBloc = BlocProvider.of(context);
+    _titleController = TextEditingController();
+    _textController = TextEditingController();
+    _shortDescController = TextEditingController();
     super.initState();
   }
 
@@ -90,7 +93,7 @@ class _NewsPublicationScreenState extends State<NewsPublicationScreen> {
                       maxHeight: 35.h,
                       maxWidth: 263.w,
                     ),
-                    controller: titleController,
+                    controller: _titleController,
                     radius: 5,
                     validate: (value) =>
                         validatesHelper.titleValidate(value!, 'загаловок'),
@@ -104,7 +107,7 @@ class _NewsPublicationScreenState extends State<NewsPublicationScreen> {
                       minHeight: 35.h,
                       minWidth: 263.w,
                     ),
-                    controller: shortDescController,
+                    controller: _shortDescController,
                     radius: 5,
                     validate: (value) =>
                         validatesHelper.titleValidate(value!, 'описание'),
@@ -114,7 +117,7 @@ class _NewsPublicationScreenState extends State<NewsPublicationScreen> {
                     title: 'Текст новости',
                     constraints:
                         BoxConstraints(maxHeight: 95.h, maxWidth: 263.w),
-                    controller: textController,
+                    controller: _textController,
                     maxLines: 100,
                     radius: 5,
                     validate: (value) =>
@@ -140,6 +143,9 @@ class _NewsPublicationScreenState extends State<NewsPublicationScreen> {
                       }
                       if (state is LoadedCreatePostState) {
                         context.router.replace(const ProfileScreenRoute());
+                        _titleController.dispose();
+                        _textController.dispose();
+                        _shortDescController.dispose();
                       }
                     },
                     builder: (context, state) {
@@ -157,11 +163,11 @@ class _NewsPublicationScreenState extends State<NewsPublicationScreen> {
                             if (_formkey.currentState!.validate()) {
                               _createPostBloc.add(
                                 CreateNewsPostEvent(
-                                  title: titleController.text,
-                                  text: textController.text,
+                                  title: _titleController.text,
+                                  text: _textController.text,
                                   image: _imagePost,
                                   tag: _tag!,
-                                  shortDesc: shortDescController.text,
+                                  shortDesc: _shortDescController.text,
                                 ),
                               );
                             }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:megalab_news_app/commons/names_helper.dart';
 import 'package:megalab_news_app/core/error/exception.dart';
 import 'package:megalab_news_app/feature/news_feed/data/models/post_model.dart';
 import 'package:megalab_news_app/utils/dependencies_export.dart';
@@ -9,8 +10,6 @@ abstract class FavoritesLocalDataSource {
   Future<void> favoritesToCache(List<PostModel> favoritesModel);
 }
 
-const CACHED_FAVORITES = 'CACHED_FAVORITES';
-
 class FavoritesLocalDataSourceImpl implements FavoritesLocalDataSource {
   final SharedPreferences sharedPreferences;
 
@@ -18,7 +17,8 @@ class FavoritesLocalDataSourceImpl implements FavoritesLocalDataSource {
 
   @override
   Future<List<PostModel>> getFavoritesFromCache() {
-    final jsonFavorites = sharedPreferences.getStringList(CACHED_FAVORITES);
+    final jsonFavorites =
+        sharedPreferences.getStringList(NamesHelper.cachedFavorites);
     if (jsonFavorites!.isNotEmpty) {
       return Future.value(
         jsonFavorites
@@ -35,7 +35,7 @@ class FavoritesLocalDataSourceImpl implements FavoritesLocalDataSource {
     final List<String> listFavorites =
         favoritesModel.map((post) => json.encode(post.toJson())).toList();
 
-    sharedPreferences.setStringList(CACHED_FAVORITES, listFavorites);
+    sharedPreferences.setStringList(NamesHelper.cachedFavorites, listFavorites);
     // ignore: void_checks
     return Future.value(listFavorites);
   }

@@ -35,7 +35,7 @@ class NewsScreen extends StatefulWidget {
 }
 
 class _NewsScreenState extends State<NewsScreen> {
-  TextEditingController commentController = TextEditingController();
+  late TextEditingController _commentController;
   ScrollController? _scrollController;
   late PostDetailBloc _postDetailBloc;
   late CommentBloc _commentBloc;
@@ -46,6 +46,7 @@ class _NewsScreenState extends State<NewsScreen> {
     _commentBloc = BlocProvider.of(context, listen: false);
     _postDetailBloc.add(GetPostDetailEvent(postId: widget.postId));
     _scrollController = ScrollController();
+    _commentController = TextEditingController();
     super.initState();
   }
 
@@ -148,7 +149,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                     maxWidth: 250.w,
                                   ),
                                   hinText: 'Напишите комментарий',
-                                  controller: commentController,
+                                  controller: _commentController,
                                 ),
                                 BlocConsumer<CommentBloc, CommentState>(
                                   bloc: _commentBloc,
@@ -166,7 +167,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                         GetPostDetailEvent(
                                             postId: widget.postId),
                                       );
-                                      commentController.clear();
+                                      _commentController.clear();
                                     }
                                   },
                                   builder: (context, state) {
@@ -179,7 +180,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                       onPressed: () => _commentBloc.add(
                                         CommentToPostEvent(
                                           postId: postId,
-                                          text: commentController.text,
+                                          text: _commentController.text,
                                         ),
                                       ),
                                       width: 60.w,

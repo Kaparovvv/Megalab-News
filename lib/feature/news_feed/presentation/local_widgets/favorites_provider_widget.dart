@@ -17,8 +17,8 @@ class FavoritesBlocProviderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => FavoritesBloc(
-        postToFavorites: getIt.get<PostToFavorites>(),
-        deleteFromFavorites: getIt.get<DeleteFromFavorites>(),
+        postToFavorites: getIt(),
+        deleteFromFavorites: getIt(),
       ),
       child: ButtonAddToFavoritesWidget(postId: postId, isLiked: isLiked),
     );

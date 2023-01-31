@@ -33,12 +33,10 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  TextEditingController searchController = TextEditingController();
-
-  TextEditingController lastNameController = TextEditingController();
-
-  TextEditingController nameController = TextEditingController();
-  TextEditingController nickNameController = TextEditingController();
+  late TextEditingController _searchController;
+  late TextEditingController _nicknameController;
+  late TextEditingController _nameController;
+  late TextEditingController _lastNameController;
 
   File? _imageProfile;
   late UserDataBloc _userDataBloc;
@@ -49,6 +47,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _userDataBloc = BlocProvider.of(context);
     _postBloc = BlocProvider.of(context);
     _userDataBloc.add(GetUserDataEvent());
+    _nicknameController = TextEditingController();
+    _nameController = TextEditingController();
+    _lastNameController = TextEditingController();
+    _searchController = TextEditingController();
     super.initState();
   }
 
@@ -57,9 +59,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (_imageProfile != null) {
       _userDataBloc.add(
         PutUserDataEvent(
-          name: nameController.text,
-          lastName: lastNameController.text,
-          nickName: nickNameController.text,
+          name: _nameController.text,
+          lastName: _lastNameController.text,
+          nickName: _nicknameController.text,
           profileImage: _imageProfile,
         ),
       );
@@ -69,11 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         BlocConsumer<UserDataBloc, UserDataState>(
           bloc: _userDataBloc,
           listener: (context, state) {
-            if (state is ErrorGetUserDataState) {
-              showCustomSnackBar(context, state.message);
-            }
-
-            if (state is ErrorPutUserDataState) {
+            if (state is ErrorUserDataState) {
               showCustomSnackBar(context, state.message);
             }
 
@@ -84,10 +82,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   query: '',
                 ),
               );
+              _searchController.clear();
             }
 
             if (state is LoadedPutUserDataState) {
               _userDataBloc.add(GetUserDataEvent());
+              _nicknameController.clear();
+              _nameController.clear();
+              _lastNameController.clear();
             }
           },
           builder: (context, state) {
@@ -118,13 +120,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onSearch: () => showDialog(
                       context: context,
                       builder: (context) => PopUpSearchField(
-                        controller: searchController,
+                        controller: _searchController,
                         onPressed: () {
-                          if (searchController.text.isNotEmpty) {
+                          if (_searchController.text.isNotEmpty) {
                             _postBloc.add(
                               GetPostListByAuthorEvent(
                                 author: userData.nickname,
-                                query: searchController.text,
+                                query: _searchController.text,
                               ),
                             );
                           }
@@ -146,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         }
 
                         if (state is LoadedPostListState) {
-                          searchController.clear();
+                          _searchController.clear();
                         }
                       },
                       builder: (context, state) {
@@ -182,32 +184,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 deleteImage: () =>
                                                     _userDataBloc.add(
                                                   PutUserDataEvent(
-                                                    name: nameController.text,
+                                                    name: _nameController.text,
                                                     lastName:
-                                                        lastNameController.text,
+                                                        _lastNameController
+                                                            .text,
                                                     nickName:
-                                                        nickNameController.text,
+                                                        _nicknameController
+                                                            .text,
                                                     profileImage: null,
                                                   ),
                                                 ),
                                               ),
                                               TextFieldsColumnWidget(
                                                 lastNameController:
-                                                    lastNameController,
-                                                nameController: nameController,
+                                                    _lastNameController,
+                                                nameController: _nameController,
                                                 nickNameController:
-                                                    nickNameController,
+                                                    _nicknameController,
                                                 name: userData.name,
                                                 lastName: userData.lastName,
                                                 nickName: userData.nickname,
                                                 saveUserData: () =>
                                                     _userDataBloc.add(
                                                   PutUserDataEvent(
-                                                    name: nameController.text,
+                                                    name: _nameController.text,
                                                     lastName:
-                                                        lastNameController.text,
+                                                        _lastNameController
+                                                            .text,
                                                     nickName:
-                                                        nickNameController.text,
+                                                        _nicknameController
+                                                            .text,
                                                     profileImage: _imageProfile,
                                                   ),
                                                 ),
