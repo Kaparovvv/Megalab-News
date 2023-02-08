@@ -28,10 +28,15 @@ import '../../feature/profile/presentation/screens/profile_screen/profile_screen
 import '../../feature/register/presentation/screens/registration_screen.dart'
     as _i6;
 import '../../feature/splash/splash_screen/splash_screen.dart' as _i1;
+import 'auth_guard.dart' as _i11;
 
 class AppRouter extends _i9.RootStackRouter {
-  AppRouter([_i10.GlobalKey<_i10.NavigatorState>? navigatorKey])
-      : super(navigatorKey);
+  AppRouter({
+    _i10.GlobalKey<_i10.NavigatorState>? navigatorKey,
+    required this.authGuard,
+  }) : super(navigatorKey);
+
+  final _i11.AuthGuard authGuard;
 
   @override
   final Map<String, _i9.PageFactory> pagesMap = {
@@ -78,9 +83,15 @@ class AppRouter extends _i9.RootStackRouter {
       );
     },
     AuthScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<AuthScreenRouteArgs>(
+          orElse: () => const AuthScreenRouteArgs());
       return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i7.AuthScreen(),
+        child: _i7.AuthScreen(
+          key: args.key,
+          isBackButton: args.isBackButton,
+          onLoginResult: args.onLoginResult,
+        ),
       );
     },
     SelectedNewsScreenRoute.name: (routeData) {
@@ -106,6 +117,7 @@ class AppRouter extends _i9.RootStackRouter {
         _i9.RouteConfig(
           NewsListScreenRoute.name,
           path: 'newsList',
+          guards: [authGuard],
         ),
         _i9.RouteConfig(
           NewsScreenRoute.name,
@@ -240,14 +252,41 @@ class RegistrationScreenRoute extends _i9.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i7.AuthScreen]
-class AuthScreenRoute extends _i9.PageRouteInfo<void> {
-  const AuthScreenRoute()
-      : super(
+class AuthScreenRoute extends _i9.PageRouteInfo<AuthScreenRouteArgs> {
+  AuthScreenRoute({
+    _i10.Key? key,
+    bool isBackButton = false,
+    void Function(bool)? onLoginResult,
+  }) : super(
           AuthScreenRoute.name,
           path: 'authorization',
+          args: AuthScreenRouteArgs(
+            key: key,
+            isBackButton: isBackButton,
+            onLoginResult: onLoginResult,
+          ),
         );
 
   static const String name = 'AuthScreenRoute';
+}
+
+class AuthScreenRouteArgs {
+  const AuthScreenRouteArgs({
+    this.key,
+    this.isBackButton = false,
+    this.onLoginResult,
+  });
+
+  final _i10.Key? key;
+
+  final bool isBackButton;
+
+  final void Function(bool)? onLoginResult;
+
+  @override
+  String toString() {
+    return 'AuthScreenRouteArgs{key: $key, isBackButton: $isBackButton, onLoginResult: $onLoginResult}';
+  }
 }
 
 /// generated route for

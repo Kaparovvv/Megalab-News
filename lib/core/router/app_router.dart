@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:megalab_news_app/core/router/auth_guard.dart';
 import 'package:megalab_news_app/feature/auth/presentation/auth_screen.dart';
 import 'package:megalab_news_app/feature/register/presentation/screens/registration_screen.dart';
 import 'package:megalab_news_app/feature/news_feed/presentation/screens/news_list_screen/news_list_screen.dart';
@@ -12,7 +13,12 @@ import 'package:megalab_news_app/feature/splash/splash_screen/splash_screen.dart
   replaceInRouteName: 'Page Route',
   routes: <AutoRoute>[
     AutoRoute(path: 'splashScreen', page: SplashScreen, initial: true),
-    AutoRoute(path: 'newsList', page: NewsListScreen),
+    AutoRoute(
+      path: 'newsList',
+      page: NewsListScreen,
+      initial: true,
+      guards: [AuthGuard],
+    ),
     AutoRoute(path: 'news', page: NewsScreen),
     AutoRoute(path: 'publication', page: NewsPublicationScreen),
     AutoRoute(path: 'profile', page: ProfileScreen),

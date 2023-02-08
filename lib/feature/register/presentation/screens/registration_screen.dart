@@ -48,6 +48,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () => context.router.navigateBack(),
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: ThemeHelper.color7E5BC2,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Align(
           alignment: Alignment.center,
@@ -115,7 +126,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           showCustomSnackBar(context, state.message);
                         }
                         if (state is LoadedRegisterState) {
-                          context.router.push(const AuthScreenRoute());
+                          context.router.push(
+                            AuthScreenRoute(
+                                isBackButton: true, onLoginResult: (succes) {}),
+                          );
                           _nicknameController.dispose();
                           _nameController.dispose();
                           _lastNameController.dispose();
@@ -145,27 +159,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           },
                         );
                       },
-                    ),
-                    SizedBox(height: 16.h),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Уже есть логин?',
-                          style: TextStyleHelper.f12w400
-                              .copyWith(color: ThemeHelper.color5A5A5A),
-                        ),
-                        CustomTextButtonWidget(
-                          onPressed: () => context.router.push(
-                            const AuthScreenRoute(),
-                          ),
-                          text: 'Войти',
-                          textStyle: TextStyleHelper.f12w400.copyWith(
-                            color: ThemeHelper.color2D4EC2,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ],
                     ),
                   ],
                 ),

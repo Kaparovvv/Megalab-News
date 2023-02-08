@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(
       const Duration(seconds: 3),
     );
-    context.router.replace(const RegistrationScreenRoute());
+    context.router.replace(const NewsListScreenRoute());
   }
 
   @override

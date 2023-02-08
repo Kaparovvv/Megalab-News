@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:megalab_news_app/commons/theme_helper.dart';
 import 'package:megalab_news_app/core/router/app_router.gr.dart';
+import 'package:megalab_news_app/core/router/auth_guard.dart';
 import 'package:megalab_news_app/feature/profile/presentation/blocs/cubit/edit_button_cubit.dart';
 import 'package:megalab_news_app/utils/dependencies_export.dart';
 import 'package:megalab_news_app/utils/dependencies_injection.dart';
@@ -10,7 +11,7 @@ import 'package:megalab_news_app/utils/dependencies_injection.dart';
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  final AppRouter _appRouter = AppRouter();
+  final AppRouter _appRouter = AppRouter(authGuard: AuthGuard());
 
   @override
   Widget build(BuildContext context) {
